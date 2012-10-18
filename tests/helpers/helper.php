@@ -65,6 +65,13 @@ final class Helper
 	 * @var string
 	 */
 	private $testfiles_path;
+	
+	/**
+	 * project root directory path
+	 * 
+	 * @var string 
+	 */
+	private static $root_dir;
 
 	/**
 	 * autoloader function
@@ -73,8 +80,15 @@ final class Helper
 	 * @param string $class
 	 */
 	public static function autoload($class)
-	{
-		require_once preg_replace('/[_\\\\]/', DIRECTORY_SEPARATOR, $class).'.php';
+	{	
+		$class = str_replace(basename(static::$root_dir), "FuelPHP", $class);		
+		if (!class_exists($class, false)) {
+			require_once preg_replace(
+			    '/[_\\\\]/',
+			    DIRECTORY_SEPARATOR, 
+			    str_replace('FuelPHP_', '', $class)
+			).'.php';
+		}
 	}
 
 	/**
@@ -107,6 +121,8 @@ final class Helper
 	 */
 	public function init($ruleset)
 	{
+		static::$root_dir     = dirname(dirname(__DIR__));
+		set_include_path(get_include_path().PATH_SEPARATOR.static::$root_dir);		
 		spl_autoload_register(get_class($this).'::autoload');
 		$this->phpcs_cli      = new PHP_CodeSniffer_CLI();
 		$this->phpcs_cli->checkRequirements();
@@ -165,7 +181,7 @@ final class Helper
 		$values = $this->phpcs_cli->getDefaults();
 		$values['files']    = $files;
 		$values['standard'] = empty($ruleset) ? $this->ruleset : $ruleset;
-		$values['tabWidth'] = 4;
+		$values['tabWidth'] = 0;
 		$values['encoding'] = 'utf-8';
 		$values['reports']  = array('xml' => null);
 		//
