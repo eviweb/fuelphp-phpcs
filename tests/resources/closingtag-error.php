@@ -1,6 +1,7 @@
 <?php
 
 /* vim: set noexpandtab tabstop=8 shiftwidth=8 softtabstop=8: */
+
 /**
  * The MIT License
  *
@@ -30,6 +31,7 @@
  * @license     http://opensource.org/licenses/MIT MIT License
  */
 
+namespace evidev\fuelphp\phpcs\tests\resources;
 
 class ClosingTagError {}
 

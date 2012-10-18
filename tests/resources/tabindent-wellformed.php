@@ -33,8 +33,14 @@
 
 namespace evidev\fuelphp\phpcs\tests\resources;
 
-class ClosingTagWellFormed {}
-
-/**
- * no php closing tag
- */
+class TabIndentWellFormed
+{
+	/**
+	 * the following indentation is correct as it is done with tabs and not spaces
+	 */
+	public function indented()
+	{
+		$i = 0;
+		$var = 0;
+	}
+}

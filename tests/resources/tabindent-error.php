@@ -1,7 +1,6 @@
 <?php
 
 /* vim: set noexpandtab tabstop=8 shiftwidth=8 softtabstop=8: */
-
 /**
  * The MIT License
  *
@@ -33,8 +32,14 @@
 
 namespace evidev\fuelphp\phpcs\tests\resources;
 
-class ClosingTagWellFormed {}
-
-/**
- * no php closing tag
- */
+class TabIndentError
+{
+    /**
+     * the following indentation must be set with tabs, no spaces are allowed
+     */
+    public function indented()
+    {
+        $i   = 0;
+        $var = 0;
+    }
+}
