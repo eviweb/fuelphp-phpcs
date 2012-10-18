@@ -101,4 +101,23 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(0, $test['errors']);
 	}
 
+	/**
+	 * check filename is in lowercase
+	 * 
+	 * @coversNothing
+	 */
+	public function testFilenameInLowercase()
+	{
+		$test = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getErrorTestFile('Filename')
+		);
+		$this->assertEquals(1, $test['errors']);
+		$source = $test['xml']->xpath('//error/@source');
+		$this->assertEquals('FuelPHP.NamingConventions.LowerCaseFileName.UpperCaseInFileName', (string)$source[0]);
+		//
+		$test = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getWellFormedTestFile('filename')
+		);
+		$this->assertEquals(0, $test['errors']);
+	}
 }

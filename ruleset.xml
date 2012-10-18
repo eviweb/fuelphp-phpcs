@@ -64,7 +64,7 @@ THE SOFTWARE.
 
 		All file names must be all lower case. No exceptions.
 	-->
-	<!-- TODO -->
+	<rule ref="FuelPHP.NamingConventions.LowerCaseFileName"/>
 
 	<!--
 		Encoding
