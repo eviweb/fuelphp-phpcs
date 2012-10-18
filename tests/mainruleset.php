@@ -81,6 +81,24 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(0, $test['errors']);
 	}
 	
-	
+	/**
+	 * check indentation is done using tabs only
+	 * 
+	 * @coversNothing
+	 */
+	public function testTabIndent()
+	{
+		$test = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getErrorTestFile('tabindent')
+		);
+		$this->assertEquals(6, $test['errors']);
+		$source = $test['xml']->xpath('//error/@source');
+		$this->assertEquals('FuelPHP.WhiteSpace.DisallowSpaceIndent.SpacesUsed', (string)$source[0]);
+		//
+		$test = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getWellFormedTestFile('tabindent')
+		);
+		$this->assertEquals(0, $test['errors']);
+	}
 
 }

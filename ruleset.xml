@@ -46,7 +46,7 @@ THE SOFTWARE.
 		All indentation should be done using real tabs, NOT spaces.
 		But aligning things after the indentation should be done using spaces, NOT tabs.
 	-->
-	<!-- TODO -->
+	<rule ref="FuelPHP.WhiteSpace.DisallowSpaceIndent"/>
 
 	<!--
 		Line Endings
