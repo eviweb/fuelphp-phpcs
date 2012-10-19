@@ -31,7 +31,7 @@
  * @license     http://opensource.org/licenses/MIT MIT License
  */
 
-namespace evidev\fuelphp\phpcs\tests\resources;
+namespace evidev\fuelphp\phpcs\tests\resources\testfiles;
 
 class ClosingTagWellFormed {}
 
