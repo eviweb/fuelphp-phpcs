@@ -23,28 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 
-<phpunit backupGlobals="true"
-	 backupStaticAttributes="false"
-	 cacheTokens="false"
-	 colors="false"
-	 convertErrorsToExceptions="true"
-	 convertNoticesToExceptions="true"
-	 convertWarningsToExceptions="true"
-	 forceCoversAnnotation="false"
-	 mapTestClassNameToCoveredClassName="false"
-	 printerClass="PHPUnit_TextUI_ResultPrinter"
-	 processIsolation="false"
-	 stopOnError="false"
-	 stopOnFailure="false"
-	 stopOnIncomplete="false"
-	 stopOnSkipped="false"
-	 testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
-	 strict="false"
-	 verbose="false"
-	 bootstrap="../tests/bootstrap.php">
-	<testsuites>
-		<testsuite name="phpcs">
-			<file>../tests/mainruleset.php</file>
-		</testsuite>
-	</testsuites>
-</phpunit>
+<ruleset name="FuelPHP">
+	<description>
+		Coding standards Test for FuelPHP http://docs.fuelphp.com/general/coding_standards.html
+	</description>
+
+	<!--
+		Indentation
+
+		All indentation should be done using real tabs, NOT spaces.
+		But aligning things after the indentation should be done using spaces, NOT tabs.
+	-->
+	<rule ref="FuelPHP.WhiteSpace.DisallowSpaceIndent"/>
+</ruleset>

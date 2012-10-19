@@ -60,11 +60,11 @@ final class Helper
 	private $ruleset;
 	
 	/**
-	 * directory path of test files
+	 * directory path of resources
 	 * 
 	 * @var string
 	 */
-	private $testfiles_path;
+	private $resources_path;
 	
 	/**
 	 * project root directory path
@@ -107,7 +107,7 @@ final class Helper
 	{
 		if (is_null(static::$instance))
 		{
-			static::$instance = new static();
+			static::$instance = new static();			
 		}
 
 		return static::$instance;
@@ -121,13 +121,25 @@ final class Helper
 	 */
 	public function init($ruleset)
 	{
-		static::$root_dir     = dirname(dirname(__DIR__));
-		set_include_path(get_include_path().PATH_SEPARATOR.static::$root_dir);		
+		static::$root_dir = dirname(dirname(__DIR__));
+		set_include_path(
+			get_include_path()
+			.PATH_SEPARATOR
+			.static::$root_dir
+			.PATH_SEPARATOR
+			.static::$root_dir
+				.DIRECTORY_SEPARATOR
+				.'tests/'
+				.DIRECTORY_SEPARATOR
+				.'resources'
+				.DIRECTORY_SEPARATOR
+				.'codesniffer'
+		);		
 		spl_autoload_register(get_class($this).'::autoload');
 		$this->phpcs_cli      = new PHP_CodeSniffer_CLI();
 		$this->phpcs_cli->checkRequirements();
 		$this->ruleset        = $ruleset;
-		$this->testfiles_path = dirname(__DIR__)
+		$this->resources_path = dirname(__DIR__)
 					.DIRECTORY_SEPARATOR
 					.'resources'
 					.DIRECTORY_SEPARATOR;
@@ -151,7 +163,7 @@ final class Helper
 	 * @see    $ruleset
 	 * @return string
 	 */
-	public function getRuleset()
+	public function getMainRuleset()
 	{
 		return $this->ruleset;
 	}
@@ -163,7 +175,7 @@ final class Helper
 	 * @param  string $ruleset	ruleset file path
 	 * @return \evidev\fuelphp\phpcs\tests\helpers\Helper
 	 */
-	public function setRuleset($ruleset)
+	public function setMainRuleset($ruleset)
 	{
 		$this->ruleset = $ruleset;
 		return $this->ruleset;
@@ -183,7 +195,7 @@ final class Helper
 		$values['standard'] = empty($ruleset) ? $this->ruleset : $ruleset;
 		$values['tabWidth'] = 0;
 		$values['encoding'] = 'utf-8';
-		$values['reports']  = array('xml' => null);
+		$values['reports']  = array('xml' => null);		
 		//
 		$result = array(
 		    'xml'    => '',
@@ -204,7 +216,11 @@ final class Helper
 	 */
 	public function getErrorTestFile($fileid)
 	{
-		return $this->testfiles_path.$fileid.'-error.php';
+		return $this->resources_path
+			.'testfiles'
+			.DIRECTORY_SEPARATOR
+			.$fileid
+			.'-error.php';
 	}
 
 	/**
@@ -215,7 +231,44 @@ final class Helper
 	 */
 	public function getWellFormedTestFile($fileid)
 	{
-		return $this->testfiles_path.$fileid.'-wellformed.php';
+		return $this->resources_path
+			.'testfiles'
+			.DIRECTORY_SEPARATOR
+			.$fileid
+			.'-wellformed.php';
+	}
+	
+	/**
+	 * get the path of a ruleset file
+	 * 
+	 * @param  string $fileid	the part of the file name before -ruleset
+	 * @return string		returns the path of the ruleset file
+	 */
+	public function getTestRuleset($fileid)
+	{
+		return $this->resources_path
+			.'codesniffer'
+			.DIRECTORY_SEPARATOR
+			.$fileid
+			.DIRECTORY_SEPARATOR
+			.'FuelPHP'
+			.DIRECTORY_SEPARATOR
+			.'ruleset.xml';
+	}
+	
+	/**
+	 * require a Sniff
+	 * 
+	 * @param  string $name		name of the Sniff file
+	 * @return void
+	 */
+	public function requireSniff($name)
+	{
+		require_once static::$root_dir
+				.DIRECTORY_SEPARATOR
+				.'Sniffs'
+				.DIRECTORY_SEPARATOR
+				.$name;
 	}
 }
 
