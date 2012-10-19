@@ -135,7 +135,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 	 * 
 	 * @coversNothing
 	 */
-	public function testLowercaseUndescoreFunctionName()
+	public function testLowercaseUnderscoreFunctionName()
 	{
 		$ruleset  = Helper::instance()->getTestRuleset('functionname');
 		$test     = Helper::instance()->runPHPCS_CLI(
@@ -175,6 +175,68 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 		//
 		$test    = Helper::instance()->runPHPCS_CLI(
 			Helper::instance()->getWellFormedTestFile('functionname'),
+			$ruleset
+		);
+		$this->assertEquals(0, $test['errors']);
+	}
+	
+	/**
+	 * check variable names are concise and use underscore format
+	 * 
+	 * @coversNothing
+	 */
+	public function testConciseUnderscoredVariableName()
+	{
+		$ruleset  = Helper::instance()->getTestRuleset('variablename');
+		$test     = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getErrorTestFile('variablename'),
+			$ruleset
+		);
+		$php54    = version_compare(PHP_VERSION, '5.4.0', '>=');
+		$errors   = $php54 ? 6 : 4;
+		$warnings = $php54 ? 3 : 2;
+		$this->assertEquals($errors+$warnings, $test['errors']);
+		$expected_errors = array(
+		    'FuelPHP.NamingConventions.ConciseUnderscoredVariableName.NotUnderscore',
+		    'FuelPHP.NamingConventions.ConciseUnderscoredVariableName.NotUnderscore',
+		    'FuelPHP.NamingConventions.ConciseUnderscoredVariableName.NotUnderscore',
+		    'FuelPHP.NamingConventions.ConciseUnderscoredVariableName.NotUnderscore',
+		);
+		$expected_warnings = array(
+		    'FuelPHP.NamingConventions.ConciseUnderscoredVariableName.VariableNameTooLong',
+		    'FuelPHP.NamingConventions.ConciseUnderscoredVariableName.VariableNameTooLong',		    
+		);
+		// if trait supported
+		if ($php54) {
+			array_push(
+				$expected_errors, 
+				'FuelPHP.NamingConventions.ConciseUnderscoredVariableName.NotUnderscore',
+				'FuelPHP.NamingConventions.ConciseUnderscoredVariableName.NotUnderscore'
+			);
+			array_push(
+				$expected_warnings, 
+				'FuelPHP.NamingConventions.ConciseUnderscoredVariableName.VariableNameTooLong'
+			);
+		}
+		// loop on errors
+		$sources = $test['xml']->xpath('//error/@source');
+		$i       = 0;
+		foreach($sources as $source)
+		{
+			$this->assertEquals($expected_errors[$i], (string)$source[0]);
+			$i++;
+		}
+		// loop on warnings
+		$sources = $test['xml']->xpath('//warning/@source');
+		$i       = 0;
+		foreach($sources as $source)
+		{
+			$this->assertEquals($expected_warnings[$i], (string)$source[0]);
+			$i++;
+		}
+		//
+		$test    = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getWellFormedTestFile('variablename'),
 			$ruleset
 		);
 		$this->assertEquals(0, $test['errors']);

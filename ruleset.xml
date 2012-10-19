@@ -101,15 +101,14 @@ THE SOFTWARE.
 		Method names should also be all lower case. 
 		Visibility should always be included (public, protected, private).		
 	-->
-	<rule ref="FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName" />	
-	<!-- TODO -->
+	<rule ref="FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName" />
 
 	<!--
 		Variables
 
 		Variable names should be concise and contain only lower case letters and underscores. 
 	-->
-	<!-- TODO -->
+	<rule ref="FuelPHP.NamingConventions.ConciseUnderscoredVariableName" />
 
 	<!--
 		Constants
