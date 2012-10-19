@@ -28,6 +28,7 @@ THE SOFTWARE.
 		Coding standards for FuelPHP http://docs.fuelphp.com/general/coding_standards.html
 	</description>
 
+	<exclude-pattern>*/tests/*</exclude-pattern>
 	<!--
 		###################
 		# File Formatting #
@@ -138,7 +139,9 @@ THE SOFTWARE.
 		as should parameter/argument lists and values. 
 		Braces should be placed on a new line, and break should have the same tab as its case.
 	-->
-	<!-- TODO -->
+	<rule ref="Squiz.ControlStructures.ForEachLoopDeclaration" />
+	<rule ref="Squiz.ControlStructures.ForLoopDeclaration" />
+	<!-- TODO : complete for other control structures -->
 
 	<!--
 		Alternative if statements

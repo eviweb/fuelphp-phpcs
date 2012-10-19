@@ -50,7 +50,14 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		Helper::instance()->init(dirname(__DIR__).DIRECTORY_SEPARATOR.'ruleset.xml');
+		Helper::instance()->init(
+			dirname(__DIR__)
+			.DIRECTORY_SEPARATOR
+			.'Standards'
+			.DIRECTORY_SEPARATOR
+			.'FuelPHP'
+			.DIRECTORY_SEPARATOR
+			.'ruleset.xml');
 	}
 	
 	/**

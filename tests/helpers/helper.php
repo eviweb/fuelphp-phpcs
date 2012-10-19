@@ -80,8 +80,7 @@ final class Helper
 	 * @param string $class
 	 */
 	public static function autoload($class)
-	{	
-		$class = str_replace(basename(static::$root_dir), "FuelPHP", $class);		
+	{			
 		if (!class_exists($class, false)) {
 			require_once preg_replace(
 			    '/[_\\\\]/',
@@ -137,7 +136,13 @@ final class Helper
 				.PATH_SEPARATOR
 				.static::$root_dir
 					.DIRECTORY_SEPARATOR
-					.'tests/'
+					.'Standards'
+					.DIRECTORY_SEPARATOR
+					.'FuelPHP'
+				.PATH_SEPARATOR
+				.static::$root_dir
+					.DIRECTORY_SEPARATOR
+					.'tests'
 					.DIRECTORY_SEPARATOR
 					.'resources'
 					.DIRECTORY_SEPARATOR
@@ -274,11 +279,7 @@ final class Helper
 	 */
 	public function requireSniff($name)
 	{
-		require_once static::$root_dir
-				.DIRECTORY_SEPARATOR
-				.'Sniffs'
-				.DIRECTORY_SEPARATOR
-				.$name;
+		require_once 'Sniffs'.DIRECTORY_SEPARATOR.$name;
 	}
 }
 
