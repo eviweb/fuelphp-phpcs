@@ -68,15 +68,18 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 	 */
 	public function testClosingTag()
 	{
-		$test = Helper::instance()->runPHPCS_CLI(
-			Helper::instance()->getErrorTestFile('closingtag')
+		$ruleset = Helper::instance()->getTestRuleset('closingtag');
+		$test    = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getErrorTestFile('closingtag'),
+			$ruleset
 		);		
 		$this->assertEquals(1, $test['errors']);
-		$source = $test['xml']->xpath('//error/@source');
+		$source  = $test['xml']->xpath('//error/@source');
 		$this->assertEquals('Zend.Files.ClosingTag.NotAllowed', (string)$source[0]);
 		//
-		$test = Helper::instance()->runPHPCS_CLI(
-			Helper::instance()->getWellFormedTestFile('closingtag')
+		$test    = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getWellFormedTestFile('closingtag'),
+			$ruleset
 		);		
 		$this->assertEquals(0, $test['errors']);
 	}
@@ -88,15 +91,18 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 	 */
 	public function testTabIndent()
 	{
-		$test = Helper::instance()->runPHPCS_CLI(
-			Helper::instance()->getErrorTestFile('tabindent')
+		$ruleset = Helper::instance()->getTestRuleset('tabindent');
+		$test    = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getErrorTestFile('tabindent'),
+			$ruleset
 		);
 		$this->assertEquals(6, $test['errors']);
-		$source = $test['xml']->xpath('//error/@source');
+		$source  = $test['xml']->xpath('//error/@source');
 		$this->assertEquals('FuelPHP.WhiteSpace.DisallowSpaceIndent.SpacesUsed', (string)$source[0]);
 		//
-		$test = Helper::instance()->runPHPCS_CLI(
-			Helper::instance()->getWellFormedTestFile('tabindent')
+		$test    = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getWellFormedTestFile('tabindent'),
+			$ruleset
 		);
 		$this->assertEquals(0, $test['errors']);
 	}
@@ -108,15 +114,68 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 	 */
 	public function testFilenameInLowercase()
 	{
-		$test = Helper::instance()->runPHPCS_CLI(
-			Helper::instance()->getErrorTestFile('Filename')
+		$ruleset = Helper::instance()->getTestRuleset('filename');
+		$test    = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getErrorTestFile('Filename'),
+			$ruleset
 		);
 		$this->assertEquals(1, $test['errors']);
-		$source = $test['xml']->xpath('//error/@source');
+		$source  = $test['xml']->xpath('//error/@source');
 		$this->assertEquals('FuelPHP.NamingConventions.LowerCaseFileName.UpperCaseInFileName', (string)$source[0]);
 		//
-		$test = Helper::instance()->runPHPCS_CLI(
-			Helper::instance()->getWellFormedTestFile('filename')
+		$test    = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getWellFormedTestFile('filename'),
+			$ruleset
+		);
+		$this->assertEquals(0, $test['errors']);
+	}
+	
+	/**
+	 * check function names are in lowercase, use underscores and their visibility is set
+	 * 
+	 * @coversNothing
+	 */
+	public function testLowercaseUndescoreFunctionName()
+	{
+		$ruleset  = Helper::instance()->getTestRuleset('functionname');
+		$test     = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getErrorTestFile('functionname'),
+			$ruleset
+		);
+		$php54    = version_compare(PHP_VERSION, '5.4.0', '>=');
+		$errors   = $php54 ? 11 : 8;
+		$this->assertEquals($errors, $test['errors']);
+		$sources  = $test['xml']->xpath('//error/@source');
+		$expected = array(
+		    'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.VisibilityScope',
+		    'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.ScopeNotUnderscore',
+		    'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.ScopeNotUnderscore',
+		    'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.VisibilityScope',
+		    'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.ScopeNotUnderscore',
+		    'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.ScopeNotUnderscore',
+		    'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.NotUnderscore',
+		    'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.NotUnderscore',
+		);
+		// if trait supported
+		if ($php54) {
+			array_push(
+				$expected, 
+				'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.VisibilityScope',
+				'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.ScopeNotUnderscore',
+				'FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName.ScopeNotUnderscore'
+			);
+		}
+		
+		$i = 0;
+		foreach($sources as $source)
+		{
+			$this->assertEquals($expected[$i], (string)$source[0]);
+			$i++;
+		}
+		//
+		$test    = Helper::instance()->runPHPCS_CLI(
+			Helper::instance()->getWellFormedTestFile('functionname'),
+			$ruleset
 		);
 		$this->assertEquals(0, $test['errors']);
 	}

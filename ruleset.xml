@@ -101,6 +101,7 @@ THE SOFTWARE.
 		Method names should also be all lower case. 
 		Visibility should always be included (public, protected, private).		
 	-->
+	<rule ref="FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName" />	
 	<!-- TODO -->
 
 	<!--
