@@ -97,6 +97,13 @@ final class Helper
 	 * @var evidev\fuelphp\phpcs\tests\helpers\Helper 
 	 */
 	private static $instance;
+	
+	/**
+	 * initialization state
+	 * 
+	 * @var boolean
+	 */
+	private static $initialized = false;
 
 	/**
 	 * singleton
@@ -121,21 +128,24 @@ final class Helper
 	 */
 	public function init($ruleset)
 	{
-		static::$root_dir = dirname(dirname(__DIR__));
-		set_include_path(
-			get_include_path()
-			.PATH_SEPARATOR
-			.static::$root_dir
-			.PATH_SEPARATOR
-			.static::$root_dir
-				.DIRECTORY_SEPARATOR
-				.'tests/'
-				.DIRECTORY_SEPARATOR
-				.'resources'
-				.DIRECTORY_SEPARATOR
-				.'codesniffer'
-		);		
-		spl_autoload_register(get_class($this).'::autoload');
+		if (!static::$initialized) {
+			static::$root_dir = dirname(dirname(__DIR__));
+			set_include_path(
+				get_include_path()
+				.PATH_SEPARATOR
+				.static::$root_dir
+				.PATH_SEPARATOR
+				.static::$root_dir
+					.DIRECTORY_SEPARATOR
+					.'tests/'
+					.DIRECTORY_SEPARATOR
+					.'resources'
+					.DIRECTORY_SEPARATOR
+					.'codesniffer'
+			);		
+			spl_autoload_register(get_class($this).'::autoload');
+			static::$initialized = true;
+		}
 		$this->phpcs_cli      = new PHP_CodeSniffer_CLI();
 		$this->phpcs_cli->checkRequirements();
 		$this->ruleset        = $ruleset;
