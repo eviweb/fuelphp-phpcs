@@ -127,14 +127,14 @@ class FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff ext
 	// check underscore format and visibility scope
         if (static::isUnderscoreName($methodName) === false) {
             if ($methodProps['scope_specified'] === true) {
-                $error = '%s method name "%s" does not use underscore format. Upper format is forbidden.';
+                $error = '%s method name "%s" does not use underscore format. Upper case forbidden.';
                 $data  = array(
                           ucfirst($methodProps['scope']),
                           $errorData[0],
                          );
                 $phpcsFile->addError($error, $stackPtr, 'ScopeNotUnderscore', $data);
             } else {
-		$error = 'Method name "%s" does not use underscore format. Camel caps format is forbidden.';
+		$error = 'Method name "%s" does not use underscore format. Upper case forbidden.';
 		$phpcsFile->addError($error, $stackPtr, 'NotUnderscore', $errorData);
             }
 
@@ -175,7 +175,7 @@ class FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff ext
         }
 	
         if (static::isUnderscoreName($functionName) === false) {
-            $error = 'Function name "%s" does not use underscore format. Camel caps format is forbidden.';
+            $error = 'Function name "%s" does not use underscore format. Upper case forbidden.';
             $phpcsFile->addError($error, $stackPtr, 'NotUnderscore', $errorData);
         }
 
