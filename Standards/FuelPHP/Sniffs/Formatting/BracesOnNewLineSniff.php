@@ -72,11 +72,16 @@ class FuelPHP_Sniffs_Formatting_BracesOnNewLineSniff
         $tokens = $phpcsFile->getTokens();
         $registered = $this->register();
         // ensure we get one of the registered token
-        if (in_array($tokens[$stackPtr]['code'], $registered)) {
+        if (in_array($tokens[$stackPtr]['code'], $registered)) {            
+            if (!isset($tokens[$stackPtr]['scope_opener'])
+                    || !isset($tokens[$stackPtr]['scope_closer'])) {
+                return;
+            }
             $column = $tokens[$stackPtr]['column'];
             $line   = $tokens[$stackPtr]['line'];
             $opener = $tokens[$stackPtr]['scope_opener'];
             $closer = $tokens[$stackPtr]['scope_closer'];
+            
             // check opening braces on next line
             if ($tokens[$opener]['line'] !== ($line + 1)) {
                 $error = 'Opening brace must be on next line from its condition';
