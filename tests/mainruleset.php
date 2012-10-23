@@ -296,7 +296,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * check class declaration
+     * check increment/decrement spacing
      * 
      * @coversNothing
      */
@@ -324,6 +324,44 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         //
         $test = Helper::instance()->runPhpCsCli(
             Helper::instance()->getWellFormedTestFile('increment'),
+            $ruleset
+        );
+        $this->assertEquals(0, $test['errors']);
+    }
+    
+    /**
+     * check not operator spacing
+     * 
+     * @coversNothing
+     */
+    public function testNotOperatorSpacing()
+    {
+        $ruleset = Helper::instance()->getTestRuleset('notoperator');
+        $test = Helper::instance()->runPhpCsCli(
+            Helper::instance()->getErrorTestFile('notoperator'),
+            $ruleset
+        );
+        $this->assertEquals(8, $test['errors']);
+        $sources = $test['xml']->xpath('//error/@source');
+
+        $expected = array(
+            'FuelPHP.WhiteSpace.NotOperatorSpacing.SpaceBeforeNotOperator',
+            'FuelPHP.WhiteSpace.NotOperatorSpacing.SpaceAfterNotOperator',
+            'FuelPHP.WhiteSpace.NotOperatorSpacing.SpaceBeforeNotOperator',
+            'FuelPHP.WhiteSpace.NotOperatorSpacing.SpaceAfterNotOperator',
+            'FuelPHP.WhiteSpace.NotOperatorSpacing.SpaceBeforeNotOperator',
+            'FuelPHP.WhiteSpace.NotOperatorSpacing.SpaceAfterNotOperator',
+            'FuelPHP.WhiteSpace.NotOperatorSpacing.SpaceBeforeNotOperator',
+            'FuelPHP.WhiteSpace.NotOperatorSpacing.SpaceAfterNotOperator',
+        );
+        $i = 0;
+        foreach ($sources as $source) {
+            $this->assertEquals($expected[$i], (string) $source[0]);
+            $i++;
+        }
+        //
+        $test = Helper::instance()->runPhpCsCli(
+            Helper::instance()->getWellFormedTestFile('notoperator'),
             $ruleset
         );
         $this->assertEquals(0, $test['errors']);

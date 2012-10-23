@@ -166,7 +166,7 @@ THE SOFTWARE.
 		In some cases, this cannot be avoided and the use of && or || as its required may be used. 
 		The ! should have spaces on both sides when used.
 	-->
-	<!-- TODO -->
+	<rule ref="FuelPHP.WhiteSpace.NotOperatorSpacing" />
 
 	<!--
 		Class/Interface Declarations
