@@ -223,4 +223,5 @@ THE SOFTWARE.
    	-->
     <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing" />
     <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
+    <rule ref="FuelPHP.WhiteSpace.IncrementDecrementSpacing" />
 </ruleset>

@@ -294,4 +294,38 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(0, $test['errors']);
     }
+
+    /**
+     * check class declaration
+     * 
+     * @coversNothing
+     */
+    public function testIncrementDecrementSpacing()
+    {
+        $ruleset = Helper::instance()->getTestRuleset('increment');
+        $test = Helper::instance()->runPhpCsCli(
+            Helper::instance()->getErrorTestFile('increment'),
+            $ruleset
+        );
+        $this->assertEquals(4, $test['errors']);
+        $sources = $test['xml']->xpath('//error/@source');
+
+        $expected = array(
+            'FuelPHP.WhiteSpace.IncrementDecrementSpacing.NoInsideSpaceAllowed',
+            'FuelPHP.WhiteSpace.IncrementDecrementSpacing.NoInsideSpaceAllowed',
+            'FuelPHP.WhiteSpace.IncrementDecrementSpacing.NoInsideSpaceAllowed',
+            'FuelPHP.WhiteSpace.IncrementDecrementSpacing.NoInsideSpaceAllowed',
+        );
+        $i = 0;
+        foreach ($sources as $source) {
+            $this->assertEquals($expected[$i], (string) $source[0]);
+            $i++;
+        }
+        //
+        $test = Helper::instance()->runPhpCsCli(
+            Helper::instance()->getWellFormedTestFile('increment'),
+            $ruleset
+        );
+        $this->assertEquals(0, $test['errors']);
+    }
 }
