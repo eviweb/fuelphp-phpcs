@@ -44,242 +44,244 @@ use \PHP_CodeSniffer_CLI;
  */
 final class Helper
 {
+    /**
+     * codesniffer cli instance
+     * 
+     * @var PHP_CodeSniffer_CLI 
+     */
+    private $phpcs_cli;
 
-	/**
-	 * codesniffer cli instance
-	 * 
-	 * @var PHP_CodeSniffer_CLI 
-	 */
-	private $phpcs_cli;
+    /**
+     * main ruleset file path
+     * 
+     * @var string
+     */
+    private $ruleset;
 
-	/**
-	 * main ruleset file path
-	 * 
-	 * @var string
-	 */
-	private $ruleset;
-	
-	/**
-	 * directory path of resources
-	 * 
-	 * @var string
-	 */
-	private $resources_path;
-	
-	/**
-	 * project root directory path
-	 * 
-	 * @var string 
-	 */
-	private static $root_dir;
+    /**
+     * directory path of resources
+     * 
+     * @var string
+     */
+    private $resources_path;
 
-	/**
-	 * autoloader function
-	 * requires that pear path is in the include_path
-	 * 
-	 * @param string $class
-	 */
-	public static function autoload($class)
-	{			
-		if (!class_exists($class, false)) {
-			require_once preg_replace(
-			    '/[_\\\\]/',
-			    DIRECTORY_SEPARATOR, 
-			    str_replace('FuelPHP_', '', $class)
-			).'.php';
-		}
-	}
+    /**
+     * project root directory path
+     * 
+     * @var string 
+     */
+    private static $root_dir;
 
-	/**
-	 * instance of self
-	 * 
-	 * @var evidev\fuelphp\phpcs\tests\helpers\Helper 
-	 */
-	private static $instance;
-	
-	/**
-	 * initialization state
-	 * 
-	 * @var boolean
-	 */
-	private static $initialized = false;
+    /**
+     * autoloader function
+     * requires that pear path is in the include_path
+     * 
+     * @param string $class
+     */
+    public static function autoload($class)
+    {
+        if (!class_exists($class, false)) {
+            $class = preg_replace(
+                '/^(\w+_Sniffs_)/',
+                'PHP_CodeSniffer_Standards_$1',
+                str_replace('FuelPHP_', '', $class)
+            );
+            require_once preg_replace(
+                '/[_\\\\]/',
+                DIRECTORY_SEPARATOR,
+                $class
+            ) . '.php';
+        }
+    }
 
-	/**
-	 * singleton
-	 * 
-	 * @return evidev\fuelphp\phpcs\tests\helpers\Helper
-	 */
-	public static function instance()
-	{
-		if (is_null(static::$instance))
-		{
-			static::$instance = new static();			
-		}
+    /**
+     * instance of self
+     * 
+     * @var evidev\fuelphp\phpcs\tests\helpers\Helper 
+     */
+    private static $instance;
 
-		return static::$instance;
-	}
+    /**
+     * initialization state
+     * 
+     * @var boolean
+     */
+    private static $initialized = false;
 
-	/**
-	 * initialization
-	 * 
-	 * @param  string $ruleset	ruleset file path
-	 * @return \evidev\fuelphp\phpcs\tests\helpers\Helper
-	 */
-	public function init($ruleset)
-	{
-		if (!static::$initialized) {
-			static::$root_dir = dirname(dirname(__DIR__));
-			set_include_path(
-				get_include_path()
-				.PATH_SEPARATOR
-				.static::$root_dir
-				.PATH_SEPARATOR
-				.static::$root_dir
-					.DIRECTORY_SEPARATOR
-					.'Standards'
-					.DIRECTORY_SEPARATOR
-					.'FuelPHP'
-				.PATH_SEPARATOR
-				.static::$root_dir
-					.DIRECTORY_SEPARATOR
-					.'tests'
-					.DIRECTORY_SEPARATOR
-					.'resources'
-					.DIRECTORY_SEPARATOR
-					.'codesniffer'
-			);		
-			spl_autoload_register(get_class($this).'::autoload');
-			static::$initialized = true;
-		}
-		$this->phpcs_cli      = new PHP_CodeSniffer_CLI();
-		$this->phpcs_cli->checkRequirements();
-		$this->ruleset        = $ruleset;
-		$this->resources_path = dirname(__DIR__)
-					.DIRECTORY_SEPARATOR
-					.'resources'
-					.DIRECTORY_SEPARATOR;
-		return $this;
-	}
+    /**
+     * singleton
+     * 
+     * @return evidev\fuelphp\phpcs\tests\helpers\Helper
+     */
+    public static function instance()
+    {
+        if (is_null(static::$instance)) {
+            static::$instance = new static();
+        }
 
-	/**
-	 * read accessor
-	 * 
-	 * @see    $phpcs_cli
-	 * @return PHP_CodeSniffer_CLI
-	 */
-	public function getPHPCS_CLI()
-	{
-		return $this->phpcs_cli;
-	}
+        return static::$instance;
+    }
 
-	/**
-	 * read accessor
-	 * 
-	 * @see    $ruleset
-	 * @return string
-	 */
-	public function getMainRuleset()
-	{
-		return $this->ruleset;
-	}
+    /**
+     * initialization
+     * 
+     * @param  string $ruleset	ruleset file path
+     * @return \evidev\fuelphp\phpcs\tests\helpers\Helper
+     */
+    public function init($ruleset)
+    {
+        if (!static::$initialized) {
+            static::$root_dir = dirname(dirname(__DIR__));
+            set_include_path(
+                get_include_path()
+                . PATH_SEPARATOR
+                . static::$root_dir
+                . PATH_SEPARATOR
+                . static::$root_dir
+                . DIRECTORY_SEPARATOR
+                . 'Standards'
+                . DIRECTORY_SEPARATOR
+                . 'FuelPHP'
+                . PATH_SEPARATOR
+                . static::$root_dir
+                . DIRECTORY_SEPARATOR
+                . 'tests'
+                . DIRECTORY_SEPARATOR
+                . 'resources'
+                . DIRECTORY_SEPARATOR
+                . 'codesniffer'
+            );
+            spl_autoload_register(get_class($this) . '::autoload');
+            static::$initialized = true;
+        }
+        $this->phpcs_cli = new PHP_CodeSniffer_CLI();
+        $this->phpcs_cli->checkRequirements();
+        $this->ruleset = $ruleset;
+        $this->resources_path = dirname(__DIR__)
+            . DIRECTORY_SEPARATOR
+            . 'resources'
+            . DIRECTORY_SEPARATOR;
+        return $this;
+    }
 
-	/**
-	 * write accessor
-	 * 
-	 * @see    $ruleset
-	 * @param  string $ruleset	ruleset file path
-	 * @return \evidev\fuelphp\phpcs\tests\helpers\Helper
-	 */
-	public function setMainRuleset($ruleset)
-	{
-		$this->ruleset = $ruleset;
-		return $this->ruleset;
-	}
+    /**
+     * read accessor
+     * 
+     * @see    $phpcs_cli
+     * @return PHP_CodeSniffer_CLI
+     */
+    public function getPhpCsCli()
+    {
+        return $this->phpcs_cli;
+    }
 
-	/**
-	 * run the sniff process
-	 * 
-	 * @param  mixed  $files		string or array : single file path or list of files
-	 * @param  string $ruleset	ruleset file path
-	 * @return array returns the list of errors
-	 */
-	public function runPHPCS_CLI($files, $ruleset = '')
-	{
-		$values = $this->phpcs_cli->getDefaults();
-		$values['files']    = $files;
-		$values['standard'] = empty($ruleset) ? $this->ruleset : $ruleset;
-		$values['tabWidth'] = 0;
-		$values['encoding'] = 'utf-8';
-		$values['reports']  = array('xml' => null);		
-		//
-		$result = array(
-		    'xml'    => '',
-		    'errors' => 0
-		);
-		ob_start();
-		$result['errors'] = $this->phpcs_cli->process($values);
-		$result['xml']    = simplexml_load_string(ob_get_contents());
-		ob_end_clean();
-		return $result;
-	}
-	
-	/**
-	 * get the path of a test file containing errors
-	 * 
-	 * @param  string $fileid	the part of the file name before -error
-	 * @return string		returns the path of the test file
-	 */
-	public function getErrorTestFile($fileid)
-	{
-		return $this->resources_path
-			.'testfiles'
-			.DIRECTORY_SEPARATOR
-			.$fileid
-			.'-error.php';
-	}
+    /**
+     * read accessor
+     * 
+     * @see    $ruleset
+     * @return string
+     */
+    public function getMainRuleset()
+    {
+        return $this->ruleset;
+    }
 
-	/**
-	 * get the path of a well formed test file
-	 * 
-	 * @param  string $fileid	the part of the file name before -wellformed
-	 * @return string		returns the path of the test file
-	 */
-	public function getWellFormedTestFile($fileid)
-	{
-		return $this->resources_path
-			.'testfiles'
-			.DIRECTORY_SEPARATOR
-			.$fileid
-			.'-wellformed.php';
-	}
-	
-	/**
-	 * get the path of a ruleset file
-	 * 
-	 * @param  string $fileid	the part of the file name before -ruleset
-	 * @return string		returns the path of the ruleset file
-	 */
-	public function getTestRuleset($fileid)
-	{
-		return $this->resources_path
-			.'codesniffer'
-			.DIRECTORY_SEPARATOR
-			.$fileid
-			.DIRECTORY_SEPARATOR
-			.'FuelPHP'
-			.DIRECTORY_SEPARATOR
-			.'ruleset.xml';
-	}
-	
-	/**
-	 * require a Sniff
-	 * 
-	 * @param  string $name		name of the Sniff file
-	 * @return void
-	 */
-	public function requireSniff($name)
-	{
-		require_once 'Sniffs'.DIRECTORY_SEPARATOR.$name;
-	}
+    /**
+     * write accessor
+     * 
+     * @see    $ruleset
+     * @param  string $ruleset	ruleset file path
+     * @return \evidev\fuelphp\phpcs\tests\helpers\Helper
+     */
+    public function setMainRuleset($ruleset)
+    {
+        $this->ruleset = $ruleset;
+        return $this->ruleset;
+    }
+
+    /**
+     * run the sniff process
+     * 
+     * @param  mixed  $files		string or array : single file path or list of files
+     * @param  string $ruleset	ruleset file path
+     * @return array returns the list of errors
+     */
+    public function runPhpCsCli($files, $ruleset = '')
+    {
+        $values = $this->phpcs_cli->getDefaults();
+        $values['files'] = $files;
+        $values['standard'] = empty($ruleset) ? $this->ruleset : $ruleset;
+        $values['tabWidth'] = 0;
+        $values['encoding'] = 'utf-8';
+        $values['reports'] = array('xml' => null);
+        //
+        $result = array(
+            'xml' => '',
+            'errors' => 0
+        );
+        ob_start();
+        $result['errors'] = $this->phpcs_cli->process($values);
+        $result['xml'] = simplexml_load_string(ob_get_contents());
+        ob_end_clean();
+        return $result;
+    }
+
+    /**
+     * get the path of a test file containing errors
+     * 
+     * @param  string $fileid	the part of the file name before -error
+     * @return string		returns the path of the test file
+     */
+    public function getErrorTestFile($fileid)
+    {
+        return $this->resources_path
+            . 'testfiles'
+            . DIRECTORY_SEPARATOR
+            . $fileid
+            . '-error.php';
+    }
+
+    /**
+     * get the path of a well formed test file
+     * 
+     * @param  string $fileid	the part of the file name before -wellformed
+     * @return string		returns the path of the test file
+     */
+    public function getWellFormedTestFile($fileid)
+    {
+        return $this->resources_path
+            . 'testfiles'
+            . DIRECTORY_SEPARATOR
+            . $fileid
+            . '-wellformed.php';
+    }
+
+    /**
+     * get the path of a ruleset file
+     * 
+     * @param  string $fileid	the part of the file name before -ruleset
+     * @return string		returns the path of the ruleset file
+     */
+    public function getTestRuleset($fileid)
+    {
+        return $this->resources_path
+            . 'codesniffer'
+            . DIRECTORY_SEPARATOR
+            . $fileid
+            . DIRECTORY_SEPARATOR
+            . 'FuelPHP'
+            . DIRECTORY_SEPARATOR
+            . 'ruleset.xml';
+    }
+
+    /**
+     * require a Sniff
+     * 
+     * @param  string $name		name of the Sniff file
+     * @return void
+     */
+    public function requireSniff($name)
+    {
+        require_once 'Sniffs' . DIRECTORY_SEPARATOR . $name;
+    }
 }
-
