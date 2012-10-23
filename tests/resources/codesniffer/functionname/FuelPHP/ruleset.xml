@@ -30,9 +30,9 @@ THE SOFTWARE.
 	<!--
 		Methods
 
-		Method names should use underscores to separate words, not CamelCase. 
-		Method names should also be all lower case. 
-		Visibility should always be included (public, protected, private).		
-	-->
-	<rule ref="FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName" />
+        Method names should use underscores to separate words, not CamelCase.
+        Method names should also be all lower case.
+        Visibility should always be included (public, protected, private).
+   	-->
+    <rule ref="FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName" />
 </ruleset>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * FuelPHP_Sniffs_NamingConventions_ConciseUnderscoredVariableNameSniff.
  *
@@ -7,13 +8,14 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Eric VILLARD <dev@eviweb.fr>
- * @copyright (c) 2012 Eric VILLARD <dev@eviweb.fr>
+ * @copyright 2012 Eric VILLARD <dev@eviweb.fr>
  * @license   http://opensource.org/licenses/MIT MIT License
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
 if (class_exists('FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff not found');
+    throw new PHP_CodeSniffer_Exception(
+        'Class FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff not found'
+    );
 }
 
 /**
@@ -24,12 +26,13 @@ if (class_exists('FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionN
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Eric VILLARD <dev@eviweb.fr>
- * @copyright (c) 2012 Eric VILLARD <dev@eviweb.fr>
+ * @copyright 2012 Eric VILLARD <dev@eviweb.fr>
  * @license   http://opensource.org/licenses/MIT MIT License
  * @version   Release: 1.0.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class FuelPHP_Sniffs_NamingConventions_ConciseUnderscoredVariableNameSniff implements  PHP_CodeSniffer_Sniff
+class FuelPHP_Sniffs_NamingConventions_ConciseUnderscoredVariableNameSniff 
+    implements PHP_CodeSniffer_Sniff
 {
 
     /**
@@ -38,18 +41,18 @@ class FuelPHP_Sniffs_NamingConventions_ConciseUnderscoredVariableNameSniff imple
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                   'CSS',
-                                  );
-    
+        'PHP',
+        'JS',
+        'CSS',
+    );
+
     /**
      * variable name length limit
      * 
      * @var integer 
      */
     public $maxlength = 30;
-    
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -58,9 +61,7 @@ class FuelPHP_Sniffs_NamingConventions_ConciseUnderscoredVariableNameSniff imple
     public function register()
     {
         return array(T_VAR, T_VARIABLE);
-
-    }//end register()
-
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -73,27 +74,28 @@ class FuelPHP_Sniffs_NamingConventions_ConciseUnderscoredVariableNameSniff imple
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-	$tokens = $phpcsFile->getTokens();
-	
-	// Make sure this is a variable.
+        $tokens = $phpcsFile->getTokens();
+
+        // Make sure this is a variable.
         if ($tokens[$stackPtr]['type'] !== 'T_VARIABLE'
-		&& $tokens[$stackPtr]['type'] !== 'T_VARIABLE') {
+            && $tokens[$stackPtr]['type'] !== 'T_VARIABLE'
+        ) {
             return;
         }
-	
-	$name = $tokens[$stackPtr]['content'];
-	
-        if (FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff::isUnderscoreName($name) === false) {
-		$error = 'Variable name "%s" does not use underscore format. Upper case forbidden.';
-		$phpcsFile->addError($error, $stackPtr, 'NotUnderscore');
-        }
-	
-	if (strlen($name) > $this->maxlength) {
-		$warning = 'Variable name "%s" should be more concise. Actually more than '.$this->maxlength.' chars.';
-		$phpcsFile->addWarning($warning, $stackPtr, 'VariableNameTooLong');
-	}
-    }//end process()
-    
-}//end class
 
+        $name = $tokens[$stackPtr]['content'];
+
+        if (FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff::isUnderscoreName($name) === false) {
+            $error = 'Variable name "%s" does not use underscore format.
+                Upper case forbidden.';
+            $phpcsFile->addError($error, $stackPtr, 'NotUnderscore');
+        }
+
+        if (strlen($name) > $this->maxlength) {
+            $warning = 'Variable name "%s" should be more concise.
+                Actually more than ' . $this->maxlength . ' chars.';
+            $phpcsFile->addWarning($warning, $stackPtr, 'VariableNameTooLong');
+        }
+    }
+}
 ?>

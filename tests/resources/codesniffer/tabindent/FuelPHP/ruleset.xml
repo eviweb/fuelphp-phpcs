@@ -31,8 +31,8 @@ THE SOFTWARE.
 	<!--
 		Indentation
 
-		All indentation should be done using real tabs, NOT spaces.
-		But aligning things after the indentation should be done using spaces, NOT tabs.
-	-->
-	<rule ref="FuelPHP.WhiteSpace.DisallowSpaceIndent"/>
+      	All indentation should be done using real tabs, NOT spaces.
+      	But aligning things after the indentation should be done using spaces, NOT tabs.
+   	-->
+    <rule ref="FuelPHP.WhiteSpace.DisallowSpaceIndent"/>
 </ruleset>

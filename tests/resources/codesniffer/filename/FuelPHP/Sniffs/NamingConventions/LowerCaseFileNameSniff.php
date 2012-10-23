@@ -29,9 +29,8 @@
  * @copyright	(c) 2012 Eric VILLARD <dev@eviweb.fr>
  * @license     http://opensource.org/licenses/MIT MIT License
  */
-
 \evidev\fuelphp\phpcs\tests\helpers\Helper::instance()->requireSniff(
-	basename(__DIR__)
-	.DIRECTORY_SEPARATOR
-	.basename(__FILE__)
+    basename(__DIR__)
+    . DIRECTORY_SEPARATOR
+    . basename(__FILE__)
 );

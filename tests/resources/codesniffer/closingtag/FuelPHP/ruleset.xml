@@ -31,8 +31,8 @@ THE SOFTWARE.
 	<!--
 		Closing PHP Tag
 
-		Files containing only PHP code should always omit the closing PHP tag (?>).
-	-->
-	<rule ref="Zend.Files.ClosingTag"/>
+      	Files containing only PHP code should always omit the closing PHP tag (?>).
+   	-->
+    <rule ref="Zend.Files.ClosingTag"/>
 
 </ruleset>

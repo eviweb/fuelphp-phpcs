@@ -174,7 +174,7 @@ THE SOFTWARE.
 		Class/interface declarations have the opening brace on the following line.
 		In case the class is empty, braces will be on the same line as the definition.
 	-->
-	<!-- TODO -->
+	<rule ref="FuelPHP.Classes.ClassDeclaration"/>
 
 	<!--
 		Function/Method/Closure Declarations
@@ -217,9 +217,9 @@ THE SOFTWARE.
 	<!--
 		Operators
 
-		Space before and after logical operator.
-		Space before and after math operator.
-		No space before and after increment.
-	-->
-	<!-- TODO -->
+      		Space before and after logical operator.
+      		Space before and after math operator.
+      		No space before and after increment.
+   	-->
+    <!-- TODO -->
 </ruleset>

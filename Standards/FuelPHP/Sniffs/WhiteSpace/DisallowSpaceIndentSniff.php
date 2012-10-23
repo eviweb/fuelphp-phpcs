@@ -1,4 +1,5 @@
 <?php
+
 /**
  * FuelPHP_Sniffs_WhiteSpace_DisallowSpaceIndentSniff.
  *
@@ -7,7 +8,7 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Eric VILLARD <dev@eviweb.fr>
- * @copyright (c) 2012 Eric VILLARD <dev@eviweb.fr>
+ * @copyright 2012 Eric VILLARD <dev@eviweb.fr>
  * @license   http://opensource.org/licenses/MIT MIT License
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
@@ -20,12 +21,13 @@
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Eric VILLARD <dev@eviweb.fr>
- * @copyright (c) 2012 Eric VILLARD <dev@eviweb.fr>
+ * @copyright 2012 Eric VILLARD <dev@eviweb.fr>
  * @license   http://opensource.org/licenses/MIT MIT License
  * @version   Release: 1.0.0
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class FuelPHP_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSniffer_Sniff
+class FuelPHP_Sniffs_WhiteSpace_DisallowSpaceIndentSniff 
+    implements PHP_CodeSniffer_Sniff
 {
 
     /**
@@ -34,11 +36,10 @@ class FuelPHP_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
      * @var array
      */
     public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                   'CSS',
-                                  );
-
+        'PHP',
+        'JS',
+        'CSS',
+    );
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -48,9 +49,7 @@ class FuelPHP_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
     public function register()
     {
         return array(T_WHITESPACE);
-
-    }//end register()
-
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -75,10 +74,5 @@ class FuelPHP_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
             $error = 'Tabs must be used to indent lines; spaces are not allowed';
             $phpcsFile->addError($error, $stackPtr, 'SpacesUsed');
         }
-
-    }//end process()
-
-
-}//end class
-
-?>
+    }
+}

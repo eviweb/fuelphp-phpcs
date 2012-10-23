@@ -30,7 +30,7 @@ THE SOFTWARE.
 	<!--
 		File Naming
 
-		All file names must be all lower case. No exceptions.
-	-->
-	<rule ref="FuelPHP.NamingConventions.LowerCaseFileName"/>
+      	All file names must be all lower case. No exceptions.
+   	-->
+    <rule ref="FuelPHP.NamingConventions.LowerCaseFileName"/>
 </ruleset>

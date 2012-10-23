@@ -30,7 +30,7 @@ THE SOFTWARE.
 	<!--
 		Variables
 
-		Variable names should be concise and contain only lower case letters and underscores. 
-	-->
-	<rule ref="FuelPHP.NamingConventions.ConciseUnderscoredVariableName" />
+      	Variable names should be concise and contain only lower case letters and underscores. 
+   	-->
+    <rule ref="FuelPHP.NamingConventions.ConciseUnderscoredVariableName" />
 </ruleset>
