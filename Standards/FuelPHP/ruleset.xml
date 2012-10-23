@@ -24,210 +24,210 @@ THE SOFTWARE.
 -->
 
 <ruleset name="FuelPHP">
-	<description>
-		Coding standards for FuelPHP http://docs.fuelphp.com/general/coding_standards.html
-	</description>
+    <description>
+        Coding standards for FuelPHP http://docs.fuelphp.com/general/coding_standards.html
+    </description>
 
-	<exclude-pattern>tests/*</exclude-pattern>
-	<!--
-		###################
-		# File Formatting #
-		###################
-	-->
-	<!--
-		Closing PHP Tag
+    <exclude-pattern>tests/*</exclude-pattern>
+    <!--
+        ###################
+        # File Formatting #
+        ###################
+    -->
+    <!--
+        Closing PHP Tag
 
-		Files containing only PHP code should always omit the closing PHP tag (?>).
-	-->
-	<rule ref="Zend.Files.ClosingTag"/>
+        Files containing only PHP code should always omit the closing PHP tag (?>).
+    -->
+    <rule ref="Zend.Files.ClosingTag"/>
 
-	<!--
-		Indentation
+    <!--
+        Indentation
 
-		All indentation should be done using real tabs, NOT spaces.
-		But aligning things after the indentation should be done using spaces, NOT tabs.
-	-->
-	<rule ref="FuelPHP.WhiteSpace.DisallowSpaceIndent"/>
+        All indentation should be done using real tabs, NOT spaces.
+        But aligning things after the indentation should be done using spaces, NOT tabs.
+    -->
+    <rule ref="FuelPHP.WhiteSpace.DisallowSpaceIndent"/>
 
-	<!--
-		Line Endings
-		
-		Line endings should be Unix-style LF.
-	-->
-	<rule ref="Generic.Files.LineEndings">
-		<properties>
-			<property name="eolChar" value="\n"/>
-		</properties>
-	</rule>
+    <!--
+        Line Endings
+        
+        Line endings should be Unix-style LF.
+    -->
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
 
-	<!--
-		File Naming
+    <!--
+        File Naming
 
-		All file names must be all lower case. No exceptions.
-	-->
-	<rule ref="FuelPHP.NamingConventions.LowerCaseFileName"/>
+        All file names must be all lower case. No exceptions.
+    -->
+    <rule ref="FuelPHP.NamingConventions.LowerCaseFileName"/>
 
-	<!--
-		Encoding
+    <!--
+        Encoding
 
-		Files should be saved with UTF-8 encoding and the BOM should not be used.
-	-->
-	<rule ref="Generic.Files.ByteOrderMark"/>
+        Files should be saved with UTF-8 encoding and the BOM should not be used.
+    -->
+    <rule ref="Generic.Files.ByteOrderMark"/>
 
-	<!--
-		######################
-		# Naming Conventions #
-		######################
-	-->
-	
-	<!--
-		Namespaces
+    <!--
+        ######################
+        # Naming Conventions #
+        ######################
+    -->
+    
+    <!--
+        Namespaces
 
-		All core classes must be under the Fuel\Core namespace.
-	-->
-	<!-- TODO -->
+        All core classes must be under the Fuel\Core namespace.
+    -->
+    <!-- TODO -->
 
-	<!--
-		Classes
+    <!--
+        Classes
 
-		Class names should use underscores to separate words, and each word 
-		in the class name should begin with a capital letter. 
-	-->
-	<rule ref="PEAR.NamingConventions.ValidClassName"/>
+        Class names should use underscores to separate words, and each word 
+        in the class name should begin with a capital letter. 
+    -->
+    <rule ref="PEAR.NamingConventions.ValidClassName"/>
 
-	<!--
-		Methods
+    <!--
+        Methods
 
-		Method names should use underscores to separate words, not CamelCase. 
-		Method names should also be all lower case. 
-		Visibility should always be included (public, protected, private).		
-	-->
-	<rule ref="FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName" />
+        Method names should use underscores to separate words, not CamelCase. 
+        Method names should also be all lower case. 
+        Visibility should always be included (public, protected, private).        
+    -->
+    <rule ref="FuelPHP.NamingConventions.UnderscoredWithScopeFunctionName" />
 
-	<!--
-		Variables
+    <!--
+        Variables
 
-		Variable names should be concise and contain only lower case letters and underscores. 
-	-->
-	<rule ref="FuelPHP.NamingConventions.ConciseUnderscoredVariableName" />
+        Variable names should be concise and contain only lower case letters and underscores. 
+    -->
+    <rule ref="FuelPHP.NamingConventions.ConciseUnderscoredVariableName" />
 
-	<!--
-		Constants
+    <!--
+        Constants
 
-		Constants follow the same guide lines as variables with the exception that constants 
-		should be all upper case.
-	-->
-	<rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+        Constants follow the same guide lines as variables with the exception that constants 
+        should be all upper case.
+    -->
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
 
-	<!--
-		Keywords
+    <!--
+        Keywords
 
-		Keywords such as true, false, null, as, etc should be all lower case, as upper case 
-		is reserved for constants. 
-		Same goes for primitive types like array, integer, string.
-	-->
-	<rule ref="Generic.PHP.LowerCaseConstant"/>
-	<rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
-	<rule ref="Squiz.PHP.LowercasePHPFunctions"/>
-	<rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
-        <rule ref="Squiz.Arrays.ArrayDeclaration" />
-	<!-- TODO : complete for other keywords -->
+        Keywords such as true, false, null, as, etc should be all lower case, as upper case 
+        is reserved for constants. 
+        Same goes for primitive types like array, integer, string.
+    -->
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+    <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
+    <rule ref="Squiz.PHP.LowercasePHPFunctions"/>
+    <rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
+    <rule ref="Squiz.Arrays.ArrayDeclaration" />
+    <!-- TODO : complete for other keywords -->
 
-	<!--
-		Control Structures
+    <!--
+        Control Structures
 
-		The structure keywords such as if, for, foreach, while, switch should be followed by a space 
-		as should parameter/argument lists and values. 
-		Braces should be placed on a new line, and break should have the same tab as its case.
-	-->
-	<rule ref="Squiz.ControlStructures.ForEachLoopDeclaration" />
-	<rule ref="Squiz.ControlStructures.ForLoopDeclaration" />
-        <rule ref="Squiz.ControlStructures.SwitchDeclaration" />
-        <rule ref="FuelPHP.Formatting.BracesOnNewLine" />
-	<!-- TODO : complete for other control structures -->
+        The structure keywords such as if, for, foreach, while, switch should be followed by a space 
+        as should parameter/argument lists and values. 
+        Braces should be placed on a new line, and break should have the same tab as its case.
+    -->
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration" />
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration" />
+    <rule ref="Squiz.ControlStructures.SwitchDeclaration" />
+    <rule ref="FuelPHP.Formatting.BracesOnNewLine" />
+    <!-- TODO : complete for other control structures -->
 
-	<!--
-		Alternative if statements
+    <!--
+        Alternative if statements
 
-		In some cases, a full if statement is a bit too much code for a simple conditional assignment or function call. 
-		In those cases, you can use PHP's execution logic to use a shorter boolean-operator based syntax. 
-		Using and means the second part only gets evaluated if the first part were true, using or means the second part only gets executed if the first part were false.
-		Don't use this when both if and else are needed, just in cases like single conditional statements.
-	-->
-	<!-- TODO -->
+        In some cases, a full if statement is a bit too much code for a simple conditional assignment or function call. 
+        In those cases, you can use PHP's execution logic to use a shorter boolean-operator based syntax. 
+        Using and means the second part only gets evaluated if the first part were true, using or means the second part only gets executed if the first part were false.
+        Don't use this when both if and else are needed, just in cases like single conditional statements.
+    -->
+    <!-- TODO -->
 
-	<!--
-		##################################
-		# Comparisons, Logical operators #
-		##################################
-	-->
-	
-	<!--
-		Comparing function/method returns and variables should be type aware, for example some functions may return false,
-		and when comparing this return the type sensitive operators such as === or !==.
-		Additionally, use of and or or is preferred over && or || for readability. 
-		In some cases, this cannot be avoided and the use of && or || as its required may be used. 
-		The ! should have spaces on both sides when used.
-	-->
-	<rule ref="FuelPHP.WhiteSpace.NotOperatorSpacing" />
+    <!--
+        ##################################
+        # Comparisons, Logical operators #
+        ##################################
+    -->
+    
+    <!--
+        Comparing function/method returns and variables should be type aware, for example some functions may return false,
+        and when comparing this return the type sensitive operators such as === or !==.
+        Additionally, use of and or or is preferred over && or || for readability. 
+        In some cases, this cannot be avoided and the use of && or || as its required may be used. 
+        The ! should have spaces on both sides when used.
+    -->
+    <rule ref="FuelPHP.WhiteSpace.NotOperatorSpacing" />
         <!-- TODO : complete for other rules -->
 
-	<!--
-		Class/Interface Declarations
+    <!--
+        Class/Interface Declarations
 
-		Class/interface declarations have the opening brace on the following line.
-		In case the class is empty, braces will be on the same line as the definition.
-	-->
-	<rule ref="FuelPHP.Classes.ClassDeclaration"/>
+        Class/interface declarations have the opening brace on the following line.
+        In case the class is empty, braces will be on the same line as the definition.
+    -->
+    <rule ref="FuelPHP.Classes.ClassDeclaration"/>
 
-	<!--
-		Function/Method/Closure Declarations
-		
-		The function/method/closure opening brace must always begin on a new line and have the same indentation as its structure.
-	-->
-	<rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman" />
+    <!--
+        Function/Method/Closure Declarations
+        
+        The function/method/closure opening brace must always begin on a new line and have the same indentation as its structure.
+    -->
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman" />
 
-	<!--
-		Variables
+    <!--
+        Variables
 
-		When initializing variables, one variable should be declared per line. 
-		To enhance code readability, these should each be on a separate line.
-		Align values and comments when appropriate.
+        When initializing variables, one variable should be declared per line. 
+        To enhance code readability, these should each be on a separate line.
+        Align values and comments when appropriate.
                 
-                Note : this is extended to one statement per line
-	-->
-	<rule ref="Generic.Formatting.DisallowMultipleStatements" />
+        Note : this is extended to one statement per line
+    -->
+    <rule ref="Generic.Formatting.DisallowMultipleStatements" />
 
-	<!--
-		Brackets and Parenthesis
+    <!--
+        Brackets and Parenthesis
 
-		No space should come before or after the initial bracket/parenthesis. 
-		There should not be a space before closing bracket/parenthesis.
-	-->
-	<rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
+        No space should come before or after the initial bracket/parenthesis. 
+        There should not be a space before closing bracket/parenthesis.
+    -->
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
         <rule ref="Squiz.Arrays.ArrayBracketSpacing" />
 
-	<!--
-		String quotation
+    <!--
+        String quotation
 
-		Single quotes are preferred over double quotes.
-	-->
-	<rule ref="Squiz.Strings.DoubleQuoteUsage" />
+        Single quotes are preferred over double quotes.
+    -->
+    <rule ref="Squiz.Strings.DoubleQuoteUsage" />
 
-	<!--
-		Concatenation
+    <!--
+        Concatenation
 
-		String concatenation should not contain spaces around the joined parts.
-	-->
-	<rule ref="Squiz.Strings.ConcatenationSpacing" />
+        String concatenation should not contain spaces around the joined parts.
+    -->
+    <rule ref="Squiz.Strings.ConcatenationSpacing" />
 
-	<!--
-		Operators
+    <!--
+        Operators
 
-      		Space before and after logical operator.
-      		Space before and after math operator.
-      		No space before and after increment.
-   	-->
+        Space before and after logical operator.
+        Space before and after math operator.
+        No space before and after increment.
+    -->
     <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing" />
     <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
     <rule ref="FuelPHP.WhiteSpace.IncrementDecrementSpacing" />
