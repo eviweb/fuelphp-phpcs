@@ -366,4 +366,52 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(0, $test['errors']);
     }
+    
+    /**
+     * check control structures braces are on new lines
+     * 
+     * @coversNothing
+     */
+    public function testBracesOnNewLine()
+    {
+        $ruleset = Helper::instance()->getTestRuleset('braces');
+        $test = Helper::instance()->runPhpCsCli(
+            Helper::instance()->getErrorTestFile('braces'),
+            $ruleset
+        );
+        $this->assertEquals(18, $test['errors']);
+        $sources = $test['xml']->xpath('//error/@source');
+        $expected = array(
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceOnNextLine',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceWithSameIndentation',
+            'FuelPHP.Formatting.BracesOnNewLine.ClosingBraceFollowedByEOL',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceOnNextLine',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceWithSameIndentation',
+            'FuelPHP.Formatting.BracesOnNewLine.ClosingBraceWithSameIndentation',
+            'FuelPHP.Formatting.BracesOnNewLine.ClosingBraceFollowedByEOL',   
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceOnNextLine',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceWithSameIndentation',
+            'FuelPHP.Formatting.BracesOnNewLine.ClosingBraceWithSameIndentation',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceOnNextLine',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceWithSameIndentation',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceOnNextLine',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceWithSameIndentation',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceOnNextLine',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceWithSameIndentation',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceOnNextLine',
+            'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceWithSameIndentation',
+        );
+        $i = 0;
+        foreach ($sources as $source) {
+            $this->assertEquals($expected[$i], (string) $source[0]);
+            $i++;
+        }
+
+        //
+        $test = Helper::instance()->runPhpCsCli(
+            Helper::instance()->getWellFormedTestFile('braces'),
+            $ruleset
+        );
+        $this->assertEquals(0, $test['errors']);
+    }
 }
