@@ -130,6 +130,7 @@ THE SOFTWARE.
 	<rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
 	<rule ref="Squiz.PHP.LowercasePHPFunctions"/>
 	<rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
+        <rule ref="Squiz.Arrays.ArrayDeclaration" />
 	<!-- TODO : complete for other keywords -->
 
 	<!--
@@ -141,6 +142,7 @@ THE SOFTWARE.
 	-->
 	<rule ref="Squiz.ControlStructures.ForEachLoopDeclaration" />
 	<rule ref="Squiz.ControlStructures.ForLoopDeclaration" />
+        <rule ref="Squiz.ControlStructures.SwitchDeclaration" />
 	<!-- TODO : complete for other control structures -->
 
 	<!--
@@ -167,6 +169,7 @@ THE SOFTWARE.
 		The ! should have spaces on both sides when used.
 	-->
 	<rule ref="FuelPHP.WhiteSpace.NotOperatorSpacing" />
+        <!-- TODO : complete for other rules -->
 
 	<!--
 		Class/Interface Declarations
@@ -189,8 +192,10 @@ THE SOFTWARE.
 		When initializing variables, one variable should be declared per line. 
 		To enhance code readability, these should each be on a separate line.
 		Align values and comments when appropriate.
+                
+                Note : this is extended to one statement per line
 	-->
-	<!-- TODO -->
+	<rule ref="Generic.Formatting.DisallowMultipleStatements" />
 
 	<!--
 		Brackets and Parenthesis
@@ -198,7 +203,8 @@ THE SOFTWARE.
 		No space should come before or after the initial bracket/parenthesis. 
 		There should not be a space before closing bracket/parenthesis.
 	-->
-	<!-- TODO -->
+	<rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
+        <rule ref="Squiz.Arrays.ArrayBracketSpacing" />
 
 	<!--
 		String quotation
