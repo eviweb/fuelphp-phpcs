@@ -205,14 +205,14 @@ THE SOFTWARE.
 
 		Single quotes are preferred over double quotes.
 	-->
-	<!-- TODO -->
+	<rule ref="Squiz.Strings.DoubleQuoteUsage" />
 
 	<!--
 		Concatenation
 
 		String concatenation should not contain spaces around the joined parts.
 	-->
-	<!-- TODO -->
+	<rule ref="Squiz.Strings.ConcatenationSpacing" />
 
 	<!--
 		Operators
@@ -221,5 +221,6 @@ THE SOFTWARE.
       		Space before and after math operator.
       		No space before and after increment.
    	-->
-    <!-- TODO -->
+    <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing" />
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
 </ruleset>
