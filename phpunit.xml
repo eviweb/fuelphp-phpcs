@@ -41,10 +41,10 @@ THE SOFTWARE.
 	 testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
 	 strict="false"
 	 verbose="false"
-	 bootstrap="../tests/bootstrap.php">
+	 bootstrap="./tests/bootstrap.php">
 	<testsuites>
 		<testsuite name="phpcs">
-			<file>../tests/mainruleset.php</file>
+			<file>./tests/mainruleset.php</file>
 		</testsuite>
 	</testsuites>
 </phpunit>

@@ -68,3 +68,12 @@ function braces_wellformed()
 
     }
 }
+
+// for fixing one line statement
+if ($bool) $bool = false;
+
+// for fixing no space after last closing brace
+if ($bool)
+{
+
+}

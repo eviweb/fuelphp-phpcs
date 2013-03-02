@@ -116,7 +116,8 @@ class FuelPHP_Sniffs_Formatting_BracesOnNewLineSniff
                 $phpcsFile->addError($error, $stackPtr, 'ClosingBraceWithSameIndentation');
             }
             // check eol right after
-            if ($tokens[$closer+1]['content'] !== $phpcsFile->eolChar) {
+            if (isset($tokens[$closer+1])
+                    && $tokens[$closer+1]['content'] !== $phpcsFile->eolChar) {
                 $error = 'Closing brace must be followed by EOL char';
                 $phpcsFile->addError($error, $stackPtr, 'ClosingBraceFollowedByEOL');
             }
