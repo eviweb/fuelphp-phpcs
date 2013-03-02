@@ -30,7 +30,8 @@ then
 	exit 1
 fi
 
-SYMLINK="/usr/share/php/PHP/CodeSniffer/Standards/FuelPHP"
+PEAR_DIR=`pear config-get php_dir`
+SYMLINK="$PEAR_DIR/PHP/CodeSniffer/Standards/FuelPHP"
 
 if [[ -h $SYMLINK ]]
 then

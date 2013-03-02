@@ -31,9 +31,17 @@ then
 fi
 
 DIR=$(cd `dirname $0` && pwd)
-SYMLINK="/usr/share/php/PHP/CodeSniffer/Standards/FuelPHP"
+PEAR_DIR=`pear config-get php_dir`
+SYMLINK="$PEAR_DIR/PHP/CodeSniffer/Standards/FuelPHP"
 
 if [[ ! -h $SYMLINK ]]
 then
-	ln -s $DIR/Standards/FuelPHP /usr/share/php/PHP/CodeSniffer/Standards
+	ln -s $DIR/Standards/FuelPHP $SYMLINK
+fi
+
+PHP_CMD=`which php`
+if [[ -z  `$PHP_CMD -r "print(ini_get('include_path'));" | grep $PEAR_DIR` ]]
+then
+    echo "The PEAR installation directory : $PEAR_DIR, seems to be not referenced in the default PHP include path."
+    echo "You should check your php.ini."
 fi
