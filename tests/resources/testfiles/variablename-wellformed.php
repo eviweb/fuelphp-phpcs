@@ -53,14 +53,3 @@ function variable_func_wellformed()
 	 */
 	$valid_variable_name = 0;
 }
-
-if (version_compare(PHP_VERSION, '5.4.0', '>='))
-{
-	trait TraitnameWellFormed
-	{
-		/**
-		 * concise and underscore format used
-		 */
-		public $valid_property_name;
-	}
-}

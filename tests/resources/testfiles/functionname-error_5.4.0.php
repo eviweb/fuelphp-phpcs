@@ -32,35 +32,29 @@
 
 namespace evidev\fuelphp\phpcs\tests\resources\testfiles;
 
-class VariablenameError
+trait TraitnameError
 {
-	/**
-	 * underscore format must be used
-	 */
-	public $camelCase;
-	
-	/**
-	 * underscore format must be used
-	 */
-	public $uPPer_caSe;
-	
-	/**
-	 * concise name should be used
-	 */
-	public $very_very_very_very_long_long_long_property_name;
+        /**
+         * visibility scope must be specified
+         */
+        function no_visibility_specified()
+        {
+
+        }
+
+        /**
+         * underscore format must be used
+         */
+        public function camelCaseFunction()
+        {
+
+        }
+
+        /**
+         * underscore format must be used
+         */
+        public function upper_Case_funNcTion()
+        {
+
+        }
 }
-
-/**
- * underscore format must be used
- */
-$camelCase = 0;
-
-/**
- * underscore format must be used
- */
-$uPPer_caSe = 0;
-
-/**
- * concise name should be used
- */
-$very_very_very_very_long_long_long_variable_name = 0;

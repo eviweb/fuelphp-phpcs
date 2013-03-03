@@ -56,22 +56,6 @@ interface InterfacenameWellFormed
 	public function all_lowercase_undescored_with_visibility();
 }
 
-if (version_compare(PHP_VERSION, '5.4.0', '>='))
-{
-	trait TraitnameWellFormed
-	{
-		/**
-		 * visibility scope defined
-		 * 
-		 * underscore format used
-		 */
-		public function all_lowercase_undescored_with_visibility()
-		{
-			
-		}
-	}
-}
-
 /**
  * underscore format used
  */

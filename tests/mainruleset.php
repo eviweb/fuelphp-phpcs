@@ -155,11 +155,13 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
     public function testLowercaseUnderscoreFunctionName()
     {
         $ruleset = Helper::instance()->getTestRuleset('functionname');
+        $php54 = version_compare(PHP_VERSION, '5.4.0', '>=');
+        $basefile = Helper::instance()->getErrorTestFile('functionname');
+        $files = $php54 ? array($basefile, str_replace('.php', '_5.4.0.php', $basefile)) : $basefile;
         $test = Helper::instance()->runPhpCsCli(
-            Helper::instance()->getErrorTestFile('functionname'),
+            $files,
             $ruleset
         );
-        $php54 = version_compare(PHP_VERSION, '5.4.0', '>=');
         $errors = $php54 ? 11 : 8;
         $this->assertEquals($errors, $test['errors']);
         $sources = $test['xml']->xpath('//error/@source');
@@ -189,8 +191,10 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
             $i++;
         }
         //
+        $basefile = Helper::instance()->getWellFormedTestFile('functionname');
+        $files = $php54 ? array($basefile, str_replace('.php', '_5.4.0.php', $basefile)) : $basefile;
         $test = Helper::instance()->runPhpCsCli(
-            Helper::instance()->getWellFormedTestFile('functionname'),
+            $files,
             $ruleset
         );
         $this->assertEquals(0, $test['errors']);
@@ -204,11 +208,13 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
     public function testConciseUnderscoredVariableName()
     {
         $ruleset = Helper::instance()->getTestRuleset('variablename');
+        $php54 = version_compare(PHP_VERSION, '5.4.0', '>=');
+        $basefile = Helper::instance()->getErrorTestFile('variablename');
+        $files = $php54 ? array($basefile, str_replace('.php', '_5.4.0.php', $basefile)) : $basefile;
         $test = Helper::instance()->runPhpCsCli(
-            Helper::instance()->getErrorTestFile('variablename'),
+            $files,
             $ruleset
         );
-        $php54 = version_compare(PHP_VERSION, '5.4.0', '>=');
         $errors = $php54 ? 6 : 4;
         $warnings = $php54 ? 3 : 2;
         $this->assertEquals($errors + $warnings, $test['errors']);
@@ -249,8 +255,10 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
             $i++;
         }
         //
+        $basefile = Helper::instance()->getWellFormedTestFile('variablename');
+        $files = $php54 ? array($basefile, str_replace('.php', '_5.4.0.php', $basefile)) : $basefile;
         $test = Helper::instance()->runPhpCsCli(
-            Helper::instance()->getWellFormedTestFile('variablename'),
+            $files,
             $ruleset
         );
         $this->assertEquals(0, $test['errors']);

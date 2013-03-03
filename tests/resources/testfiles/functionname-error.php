@@ -92,33 +92,3 @@ function function_naMe_eRRor()
 {
 	
 }
-
-if (version_compare(PHP_VERSION, '5.4.0', '>='))
-{
-	trait TraitnameError
-	{
-		/**
-		 * visibility scope must be specified
-		 */
-		function no_visibility_specified()
-		{
-			
-		}
-		
-		/**
-		 * underscore format must be used
-		 */
-		public function camelCaseFunction()
-		{
-			
-		}
-		
-		/**
-		 * underscore format must be used
-		 */
-		public function upper_Case_funNcTion()
-		{
-			
-		}
-	}
-}

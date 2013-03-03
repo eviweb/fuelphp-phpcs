@@ -1,6 +1,7 @@
 <?php
 
 /* vim: set noexpandtab tabstop=8 shiftwidth=8 softtabstop=8: */
+
 /**
  * The MIT License
  *
@@ -32,35 +33,10 @@
 
 namespace evidev\fuelphp\phpcs\tests\resources\testfiles;
 
-class VariablenameError
+trait TraitnameWellFormed
 {
-	/**
-	 * underscore format must be used
-	 */
-	public $camelCase;
-	
-	/**
-	 * underscore format must be used
-	 */
-	public $uPPer_caSe;
-	
-	/**
-	 * concise name should be used
-	 */
-	public $very_very_very_very_long_long_long_property_name;
+        /**
+         * concise and underscore format used
+         */
+        public $valid_property_name;
 }
-
-/**
- * underscore format must be used
- */
-$camelCase = 0;
-
-/**
- * underscore format must be used
- */
-$uPPer_caSe = 0;
-
-/**
- * concise name should be used
- */
-$very_very_very_very_long_long_long_variable_name = 0;
