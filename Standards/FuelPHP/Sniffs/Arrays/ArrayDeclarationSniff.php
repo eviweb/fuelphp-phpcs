@@ -27,7 +27,24 @@
  */
 class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
+    protected function findFirstNonWhiteSpaceOnLine($tokenIndex, $tokens)
+    {
+        // go back untill we find the previous line
+        for ($i = $tokenIndex; $i >= 0; $i--) {
+            if ($tokens[$i]['line'] < $tokens[$tokenIndex]['line']) {
+                break;
+            }
+        }
 
+        // go forward till we hit a non-whitespace token
+        for (; $i <= $tokenIndex; $i++) {
+            if ($tokens[$i]['code'] != T_WHITESPACE) {
+                return $tokens[$i];
+            }
+        }
+
+        return false;
+    }
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -98,17 +115,8 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
                 }
 
                 if ($tokens[$i]['code'] === T_COMMA) {
-                    // Before counting this comma, make sure we are not
-                    // at the end of the array.
-                    $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), $arrayEnd, true);
-                    if ($next !== false) {
-                        $valueCount++;
-                        $commas[] = $i;
-                    } else {
-                        // There is a comma at the end of a single line array.
-                        $error = 'Comma not allowed after last value in single-line array declaration';
-                        $phpcsFile->addError($error, $i, 'CommaAfterLast');
-                    }
+                    $valueCount++;
+                    $commas[] = $i;
                 }
             }
 
@@ -200,10 +208,11 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
 
         // Check the closing bracket is on a new line.
         $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($arrayEnd - 1), $arrayStart, true);
+        $firstOpeningLineToken = $this->findFirstNonWhiteSpaceOnLine($arrayStart, $tokens);
         if ($tokens[$lastContent]['line'] !== ($tokens[$arrayEnd]['line'] - 1)) {
             $error = 'Closing parenthesis of array declaration must be on a new line';
             $phpcsFile->addError($error, $arrayEnd, 'CloseBraceNewLine');
-        } else if ($tokens[$arrayEnd]['column'] !== $keywordStart) {
+        } else if ($tokens[$arrayEnd]['column'] !== $keywordStart && $tokens[$arrayEnd]['column'] !== $firstOpeningLineToken['column']) {
             // Check the closing bracket is lined up under the a in array.
             $expected = $keywordStart;
             $found    = $tokens[$arrayEnd]['column'];
@@ -229,7 +238,9 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
 
             if ($tokens[$nextToken]['code'] === T_ARRAY) {
                 // Let subsequent calls of this test handle nested arrays.
-                $indices[] = array('value' => $nextToken);
+                $indices[] = array(
+                              'value' => $nextToken,
+                             );
                 $nextToken = $tokens[$tokens[$nextToken]['parenthesis_opener']]['parenthesis_closer'];
                 continue;
             }
@@ -242,7 +253,7 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
 
                 if (count($tokens[$nextToken]['nested_parenthesis']) > ($stackPtrCount + 1)) {
                     // This comma is inside more parenthesis than the ARRAY keyword,
-                    // then there it is actually a comma used to separate arguments
+                    // then there it is actually a comma used to seperate arguments
                     // in a function call.
                     continue;
                 }
@@ -328,13 +339,22 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
 
         if (empty($indices) === true) {
             $singleValue = true;
-        } else if (count($indices) === 1 && $lastToken === T_COMMA) {
-            // There may be another array value without a comma.
-            $exclude     = PHP_CodeSniffer_Tokens::$emptyTokens;
-            $exclude[]   = T_COMMA;
-            $nextContent = $phpcsFile->findNext($exclude, ($indices[0]['value'] + 1), $arrayEnd, true);
-            if ($nextContent === false) {
-                $singleValue = true;
+        } else if (count($indices) === 1) {
+            if ($lastToken === T_COMMA) {
+                // There may be another array value without a comma.
+                $exclude     = PHP_CodeSniffer_Tokens::$emptyTokens;
+                $exclude[]   = T_COMMA;
+                $nextContent = $phpcsFile->findNext($exclude, ($indices[0]['value'] + 1), $arrayEnd, true);
+                if ($nextContent === false) {
+                    $singleValue = true;
+                }
+            }
+
+            if ($singleValue === false && isset($indices[0]['arrow']) === false) {
+                // A single nested array as a value is fine.
+                if ($tokens[$indices[0]['value']]['code'] !== T_ARRAY) {
+                    $singleValue === true;
+                }
             }
         }
 
@@ -342,7 +362,7 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
             // Array cannot be empty, so this is a multi-line array with
             // a single value. It should be defined on single line.
             $error = 'Multi-line array contains a single value; use single-line array instead';
-            $phpcsFile->addError($error, $stackPtr, 'MultiLineNotAllowed');
+            $phpcsFile->addError($error, $stackPtr, 'MulitLineNotAllowed');
             return;
         }
 
@@ -415,7 +435,10 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
 
         $indicesStart = ($keywordStart + 1);
         $arrowStart   = ($indicesStart + $maxLength + 1);
+        $arrowStartIfTabs = $maxLength + $firstOpeningLineToken['column'] + 2;
         $valueStart   = ($arrowStart + 3);
+        $valueStartIfTabs = $arrowStartIfTabs + 3;
+
         foreach ($indices as $index) {
             if (isset($index['index']) === false) {
                 // Array value only.
@@ -433,17 +456,18 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
                 continue;
             }
 
-            if ($tokens[$index['index']]['column'] !== $indicesStart) {
-                $error = 'Array key not aligned correctly; expected %s spaces but found %s';
+            if ($tokens[$index['index']]['column'] !== $indicesStart && $firstOpeningLineToken['column'] + 1 !== $tokens[$index['index']]['column']) {
+                $error = 'Array key not aligned correctly; expected %s spaces (or %s tabs) but found %s';
                 $data  = array(
                           ($indicesStart - 1),
+                          ($firstOpeningLineToken['column']),
                           ($tokens[$index['index']]['column'] - 1),
                          );
                 $phpcsFile->addError($error, $index['index'], 'KeyNotAligned', $data);
                 continue;
             }
 
-            if ($tokens[$index['arrow']]['column'] !== $arrowStart) {
+            if ($tokens[$index['arrow']]['column'] !== $arrowStart && $tokens[$index['arrow']]['column'] !== $arrowStartIfTabs) {
                 $expected = ($arrowStart - (strlen($index['index_content']) + $tokens[$index['index']]['column']));
                 $found    = ($tokens[$index['arrow']]['column'] - (strlen($index['index_content']) + $tokens[$index['index']]['column']));
 
@@ -456,7 +480,7 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
                 continue;
             }
 
-            if ($tokens[$index['value']]['column'] !== $valueStart) {
+            if ($tokens[$index['value']]['column'] !== $valueStart && $tokens[$index['value']]['column'] !== $valueStartIfTabs) {
                 $expected = ($valueStart - (strlen($tokens[$index['arrow']]['content']) + $tokens[$index['arrow']]['column']));
                 $found    = ($tokens[$index['value']]['column'] - (strlen($tokens[$index['arrow']]['content']) + $tokens[$index['arrow']]['column']));
 
@@ -470,13 +494,11 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
 
             // Check each line ends in a comma.
             if ($tokens[$index['value']]['code'] !== T_ARRAY) {
-                $valueLine = $tokens[$index['value']]['line'];
                 $nextComma = false;
                 for ($i = ($index['value'] + 1); $i < $arrayEnd; $i++) {
                     // Skip bracketed statements, like function calls.
                     if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
-                        $i         = $tokens[$i]['parenthesis_closer'];
-                        $valueLine = $tokens[$i]['line'];
+                        $i = $tokens[$i]['parenthesis_closer'];
                         continue;
                     }
 
@@ -486,7 +508,7 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
                     }
                 }
 
-                if (($nextComma === false) || ($tokens[$nextComma]['line'] !== $valueLine)) {
+                if (($nextComma === false) || ($tokens[$nextComma]['line'] !== $tokens[$index['value']]['line'])) {
                     $error = 'Each line in an array declaration must end in a comma';
                     $phpcsFile->addError($error, $index['value'], 'NoComma');
                 }
@@ -503,9 +525,10 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
                     $phpcsFile->addError($error, $nextComma, 'SpaceBeforeComma', $data);
                 }
             }
+
         } //end foreach
 
     } //end process()
 
-
 } //end class
+
