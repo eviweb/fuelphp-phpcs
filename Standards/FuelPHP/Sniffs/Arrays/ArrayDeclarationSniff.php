@@ -398,7 +398,7 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
                 if ($tokens[($value['value'] - 1)]['code'] === T_WHITESPACE) {
                     // A whitespace token before this value means that the value
                     // was indented and not flush with the opening parenthesis.
-                    if ($tokens[$value['value']]['column'] !== ($keywordStart + 1)) {
+                    if ($tokens[$value['value']]['column'] !== ($keywordStart + 1) && $tokens[$value['value']]['column'] !== $firstOpeningLineToken['column'] + 1) {
                         $error = 'Array value not aligned correctly; expected %s spaces but found %s';
                         $data  = array(
                                   ($keywordStart + 1),
@@ -480,7 +480,7 @@ class FuelPHP_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sni
                 continue;
             }
 
-            if ($tokens[$index['value']]['column'] !== $valueStart && $tokens[$index['value']]['column'] !== $valueStartIfTabs) {
+            if ($tokens[$index['value']]['column'] !== $valueStart && $tokens[$index['value']]['column'] !== $valueStartIfTabs ) {
                 $expected = ($valueStart - (strlen($tokens[$index['arrow']]['content']) + $tokens[$index['arrow']]['column']));
                 $found    = ($tokens[$index['value']]['column'] - (strlen($tokens[$index['arrow']]['content']) + $tokens[$index['arrow']]['column']));
 
