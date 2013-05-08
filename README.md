@@ -10,12 +10,12 @@ Install (Linux Only)
 -------------------- 
 1. clone the project ``git clone https://github.com/eviweb/fuelphp-phpcs.git``    
 2. change directory to ./fuelphp-phpcs ``cd fuelphp-phpcs``    
-3. run installer with root privileges ``sudo ./install.sh``    
+3. run installer with root privileges ``sudo ./install.sh``
     
 Uninstall (Linux Only)
 ----------------------
 1. change directory to ./fuelphp-phpcs ``cd fuelphp-phpcs``    
-2. run installer with root privileges ``sudo ./uninstall.sh``    
+2. run uninstaller with root privileges ``sudo ./uninstall.sh``
     
 How to use
 ----------
