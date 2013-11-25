@@ -211,7 +211,7 @@ THE SOFTWARE.
         No space should come before or after the initial bracket/parenthesis. 
         There should not be a space before closing bracket/parenthesis.
     -->
-    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
+    <rule ref="FuelPHP.WhiteSpace.ControlStructureSpacing" />
     <rule ref="Squiz.Arrays.ArrayBracketSpacing" />
 
     <!--
