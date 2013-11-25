@@ -225,6 +225,21 @@ final class Helper
         ob_end_clean();
         return $result;
     }
+    
+    /**
+     * get the path of a test file
+     * 
+     * @param  string $file     file name with or without .php extension
+     * @return string		returns the full path of the test file
+     */
+    public function getTestFile($file)
+    {
+        $file = preg_match('/\.php$/', $file) ? $file : $file.'.php';
+        return $this->resources_path
+            . 'testfiles'
+            . DIRECTORY_SEPARATOR
+            . $file;
+    }
 
     /**
      * get the path of a test file containing errors
