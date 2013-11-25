@@ -20,7 +20,7 @@ Uninstall (Linux Only)
 How to use
 ----------
 run ``phpcs --standard=FuelPHP PROJECT_TO_SNIFF_DIRECTORY`` where 
-_PROJECT_TO_SNIFF_DIRECTORY_ is your fuel php project directory.     
+*PROJECT_TO_SNIFF_DIRECTORY* is your fuel php project directory.     
     
 **BE AWARE not to use --tab-width phpcs option with another value than 0, 
 this would disable tabs recognition !**    
