@@ -422,4 +422,36 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(0, $test['errors']);
     }
+    
+    /**
+     * test to valid issue #1
+     * @see https://github.com/eviweb/fuelphp-phpcs/issues/1
+     * @group current
+     */
+    function testFixIssue1()
+    {
+        $ruleset = Helper::instance()->getTestRuleset('fix-issue-1');
+        $test = Helper::instance()->runPhpCsCli(
+            Helper::instance()->getErrorTestFile('notoperator-fix-issue-1'),
+            $ruleset
+        );
+        $this->assertEquals(2, $test['errors']);
+        $sources = $test['xml']->xpath('//error/@source');
+
+        $expected = array(
+            'FuelPHP.WhiteSpace.ControlStructureSpacing.SpacingAfterOpenBrace',
+            'FuelPHP.WhiteSpace.ControlStructureSpacing.SpacingAfterOpenBrace'
+        );
+        $i = 0;
+        foreach ($sources as $source) {
+            $this->assertEquals($expected[$i], (string) $source[0]);
+            $i++;
+        }
+        //
+        $test = Helper::instance()->runPhpCsCli(
+            Helper::instance()->getWellFormedTestFile('notoperator-fix-issue-1'),
+            $ruleset
+        );        
+        $this->assertEquals(0, $test['errors']);
+    }
 }
