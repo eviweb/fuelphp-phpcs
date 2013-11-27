@@ -426,7 +426,6 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
     /**
      * test to valid issue #1
      * @see https://github.com/eviweb/fuelphp-phpcs/issues/1
-     * @group current
      */
     function testFixIssue1()
     {
@@ -450,6 +449,21 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         //
         $test = Helper::instance()->runPhpCsCli(
             Helper::instance()->getWellFormedTestFile('notoperator-fix-issue-1'),
+            $ruleset
+        );        
+        $this->assertEquals(0, $test['errors']);
+    }
+    
+    /**
+     * test to valid issue #2
+     * @see https://github.com/eviweb/fuelphp-phpcs/issues/2
+     */
+    function testFixIssue2()
+    {
+        $ruleset = Helper::instance()->getTestRuleset('fix-issue-2');
+        //
+        $test = Helper::instance()->runPhpCsCli(
+            Helper::instance()->getWellFormedTestFile('tabindent-fix-issue-2'),
             $ruleset
         );        
         $this->assertEquals(0, $test['errors']);

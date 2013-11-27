@@ -134,7 +134,7 @@ THE SOFTWARE.
     <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
     <rule ref="Squiz.PHP.LowercasePHPFunctions"/>
     <rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
-    <rule ref="Squiz.Arrays.ArrayDeclaration" />
+    <rule ref="FuelPHP.Arrays.ArrayDeclaration" />
     <!-- TODO : complete for other keywords -->
 
     <!--
