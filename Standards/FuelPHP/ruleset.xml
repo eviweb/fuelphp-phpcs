@@ -129,12 +129,13 @@ THE SOFTWARE.
         Keywords such as true, false, null, as, etc should be all lower case, as upper case 
         is reserved for constants. 
         Same goes for primitive types like array, integer, string.
+        
+        Partially checked in FuelPHP.Arrays.ArrayDeclaration
     -->
     <rule ref="Generic.PHP.LowerCaseConstant"/>
     <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
     <rule ref="Squiz.PHP.LowercasePHPFunctions"/>
     <rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
-    <rule ref="FuelPHP.Arrays.ArrayDeclaration" />
     <!-- TODO : complete for other keywords -->
 
     <!--
@@ -210,8 +211,9 @@ THE SOFTWARE.
 
         No space should come before or after the initial bracket/parenthesis. 
         There should not be a space before closing bracket/parenthesis.
+        
+        Partially checked in FuelPHP.WhiteSpace.ControlStructureSpacing
     -->
-    <rule ref="FuelPHP.WhiteSpace.ControlStructureSpacing" />
     <rule ref="Squiz.Arrays.ArrayBracketSpacing" />
 
     <!--
