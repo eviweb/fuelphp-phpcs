@@ -38,10 +38,8 @@ class FixIssue2_Stub
 	public function method_stub()
 	{
 		return array(
-			'first'  => array(
-			),
-			'second' => array(
-			),
+			'first'  => array(),
+			'second' => array(),
 		);
 	}
 }

@@ -465,7 +465,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         $test = Helper::instance()->runPhpCsCli(
             Helper::instance()->getWellFormedTestFile('tabindent-fix-issue-2'),
             $ruleset
-        );        
+        );
         $this->assertEquals(0, $test['errors']);
     }
 }
