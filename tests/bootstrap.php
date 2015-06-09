@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- * 
+ *
  * @package     phpcs
  * @author      Eric VILLARD <dev@eviweb.fr>
  * @copyright	(c) 2012 Eric VILLARD <dev@eviweb.fr>
@@ -31,3 +31,9 @@
  */
 
 require_once __DIR__.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'helper.php';
+
+$autoload = __DIR__.'/../vendor/composer/autoload.php';
+
+if (file_exists($autoload)) {
+    require_once $autoload;
+}
