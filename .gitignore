@@ -1,3 +1,5 @@
 /nbproject/private/
 /nbproject/
 /doc
+/vendor/
+/composer.lock
