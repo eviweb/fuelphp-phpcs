@@ -39,12 +39,19 @@ THE SOFTWARE.
 	 stopOnIncomplete="false"
 	 stopOnSkipped="false"
 	 testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
-	 strict="false"
 	 verbose="false"
 	 bootstrap="./tests/bootstrap.php">
 	<testsuites>
 		<testsuite name="phpcs">
 			<file>./tests/mainruleset.php</file>
 		</testsuite>
+        <testsuite name="support">
+			<directory suffix="Test.php">tests/evidev/fuelphpcs</directory>
+		</testsuite>
 	</testsuites>
+    <filter>
+        <whitelist>
+            <directory>src/evidev/fuelphpcs</directory>
+        </whitelist>
+    </filter>
 </phpunit>
