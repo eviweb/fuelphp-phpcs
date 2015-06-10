@@ -45,6 +45,9 @@ THE SOFTWARE.
 		<testsuite name="phpcs">
 			<file>./tests/mainruleset.php</file>
 		</testsuite>
+        <testsuite name="fuelphpcs">
+			<file>./tests/fuelphpcs.php</file>
+		</testsuite>
         <testsuite name="support">
 			<directory suffix="Test.php">tests/evidev/fuelphpcs</directory>
 		</testsuite>
