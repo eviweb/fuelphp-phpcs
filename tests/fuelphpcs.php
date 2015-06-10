@@ -144,8 +144,8 @@ class fuelphpcs extends \PHPUnit_Framework_TestCase
         $script = realpath(__DIR__.'/../bin/fuelphpcs');
         $output = array();
 
-        assert(file_exists($script), "Script to be executed should be found: $script");
-        assert(is_executable($script), "Script must have executable permissions: $script");
+        $this->assertFileExists($script, "Script to be executed should be found: $script");
+        $this->assertTrue(is_executable($script), "Script must have executable permissions: $script");
 
         $args = implode(' ', $this->escapeShellArgs(explode(' ', $args)));
 
