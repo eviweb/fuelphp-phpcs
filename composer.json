@@ -1,0 +1,34 @@
+{
+    "name": "eviweb/fuelphp-phpcs",
+    "type": "library",
+    "description": "PHP Code Sniffer standard for Fuel PHP with dedicated CLI",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric Villard",
+            "email": "dev@eviweb.fr",
+            "homepage": "https://github.com/eviweb",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "squizlabs/php_codesniffer" : "*"
+    },
+    "require-dev" : {
+        "phpunit/phpunit": "~4"
+    },
+    "autoload": {
+        "psr-0": {
+            "evidev": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "bin-dir": "bin/"
+    }
+}
