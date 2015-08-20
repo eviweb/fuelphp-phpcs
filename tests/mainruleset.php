@@ -23,7 +23,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- * 
+ *
  * @package     phpcs
  * @author      Eric VILLARD <dev@eviweb.fr>
  * @copyright	(c) 2012 Eric VILLARD <dev@eviweb.fr>
@@ -36,7 +36,7 @@ use \evidev\fuelphp\phpcs\tests\helpers\Helper;
 
 /**
  * Main ruleset test class
- * 
+ *
  * @package     phpcs
  * @author      Eric VILLARD <dev@eviweb.fr>
  * @copyright	(c) 2012 Eric VILLARD <dev@eviweb.fr>
@@ -71,7 +71,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 
     /**
      * check php closing tag
-     * 
+     *
      * @coversNothing
      */
     public function testClosingTag()
@@ -97,7 +97,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 
     /**
      * check indentation is done using tabs only
-     * 
+     *
      * @coversNothing
      */
     public function testTabIndent()
@@ -123,7 +123,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 
     /**
      * check filename is in lowercase
-     * 
+     *
      * @coversNothing
      */
     public function testFilenameInLowercase()
@@ -149,7 +149,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 
     /**
      * check function names are in lowercase, use underscores and their visibility is set
-     * 
+     *
      * @coversNothing
      */
     public function testLowercaseUnderscoreFunctionName()
@@ -202,7 +202,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 
     /**
      * check variable names are concise and use underscore format
-     * 
+     *
      * @coversNothing
      */
     public function testConciseUnderscoredVariableName()
@@ -266,7 +266,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 
     /**
      * check class declaration
-     * 
+     *
      * @coversNothing
      */
     public function testClassDeclaration()
@@ -305,7 +305,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
 
     /**
      * check increment/decrement spacing
-     * 
+     *
      * @coversNothing
      */
     public function testIncrementDecrementSpacing()
@@ -336,10 +336,10 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(0, $test['errors']);
     }
-    
+
     /**
      * check not operator spacing
-     * 
+     *
      * @coversNothing
      */
     public function testNotOperatorSpacing()
@@ -374,10 +374,10 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(0, $test['errors']);
     }
-    
+
     /**
      * check control structures braces are on new lines
-     * 
+     *
      * @coversNothing
      */
     public function testBracesOnNewLine()
@@ -396,7 +396,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
             'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceOnNextLine',
             'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceWithSameIndentation',
             'FuelPHP.Formatting.BracesOnNewLine.ClosingBraceWithSameIndentation',
-            'FuelPHP.Formatting.BracesOnNewLine.ClosingBraceFollowedByEOL',   
+            'FuelPHP.Formatting.BracesOnNewLine.ClosingBraceFollowedByEOL',
             'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceOnNextLine',
             'FuelPHP.Formatting.BracesOnNewLine.OpeningBraceWithSameIndentation',
             'FuelPHP.Formatting.BracesOnNewLine.ClosingBraceWithSameIndentation',
@@ -422,7 +422,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(0, $test['errors']);
     }
-    
+
     /**
      * test to valid issue #1
      * @see https://github.com/eviweb/fuelphp-phpcs/issues/1
@@ -450,10 +450,10 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         $test = Helper::instance()->runPhpCsCli(
             Helper::instance()->getWellFormedTestFile('notoperator-fix-issue-1'),
             $ruleset
-        );        
+        );
         $this->assertEquals(0, $test['errors']);
     }
-    
+
     /**
      * test to valid issue #2
      * @see https://github.com/eviweb/fuelphp-phpcs/issues/2
@@ -467,5 +467,26 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
             $ruleset
         );
         $this->assertEquals(0, $test['errors']);
+    }
+
+    /**
+     * test to valid issue #5
+     * @see https://github.com/eviweb/fuelphp-phpcs/issues/5
+     */
+    public function testFixIssue5()
+    {
+        $ruleset = Helper::instance()->getTestRuleset('variablename');
+        $basefile = Helper::instance()->getErrorTestFile('variablename-fix-issue-5');
+        $test = Helper::instance()->runPhpCsCli(
+            $basefile,
+            $ruleset
+        );
+
+        // check errors and warnings
+        $errors = $test['xml']->xpath('//error');
+        $warnings = $test['xml']->xpath('//warning');
+
+        $this->assertContains('$shouldBeSetInErrorMessage', (string) $errors[0]);
+        $this->assertContains('$should_also_be_set_in_error_message_as_this_variable_name_is_too_long', (string) $warnings[0]);
     }
 }
