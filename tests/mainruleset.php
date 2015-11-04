@@ -497,7 +497,7 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
     public function testFixIssue6()
     {
         $sniffs = Helper::instance()->getAllSniffs();
-        $pattern = '/(error|warning)\s*=\s*[\'\"]([^\'\"]*[\r\n]+[^\'\"]*)[\'\"]\s*;/';
+        $pattern = '/(error|warning)\s*=\s*[\']([^\']*[\r\n]+[^\']*)[\']\s*;/';
         
         $this->assertFalse(empty($sniffs));
         foreach ($sniffs as $sniff) {
