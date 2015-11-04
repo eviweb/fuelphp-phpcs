@@ -86,14 +86,14 @@ class FuelPHP_Sniffs_NamingConventions_ConciseUnderscoredVariableNameSniff
         $name = $tokens[$stackPtr]['content'];
 
         if (FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff::isUnderscoreName($name) === false) {
-            $error = 'Variable name "%s" does not use underscore format.
-                Upper case forbidden.';
+            $error = 'Variable name "%s" does not use underscore format. ' .
+                'Upper case forbidden.';
             $phpcsFile->addError($error, $stackPtr, 'NotUnderscore', array($name));
         }
 
         if (strlen($name) > $this->maxlength) {
-            $warning = 'Variable name "%s" should be more concise.
-                Actually more than ' . $this->maxlength . ' chars.';
+            $warning = 'Variable name "%s" should be more concise. ' .
+                'Actually more than ' . $this->maxlength . ' chars.';
             $phpcsFile->addWarning($warning, $stackPtr, 'VariableNameTooLong', array($name));
         }
     }

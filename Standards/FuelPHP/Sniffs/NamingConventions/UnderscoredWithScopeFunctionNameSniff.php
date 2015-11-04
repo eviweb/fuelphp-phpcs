@@ -104,9 +104,9 @@ class FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff
         if (preg_match('|^__|', $methodName) !== 0) {
             $magicPart = substr($methodName, 2);
             if (in_array($magicPart, $this->magicMethods) === false) {
-                 $error = 'Method name "%s" is invalid; 
-                     only PHP magic methods should be prefixed with a 
-                     double underscore';
+                 $error = 'Method name "%s" is invalid; ' .
+                     'only PHP magic methods should be prefixed with a '. 
+                     'double underscore';
                  $phpcsFile->addError(
                      $error,
                      $stackPtr,
@@ -137,16 +137,16 @@ class FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff
         // check underscore format and visibility scope
         if (static::isUnderscoreName($methodName) === false) {
             if ($methodProps['scope_specified'] === true) {
-                $error = '%s method name "%s" does not use underscore format. 
-                    Upper case forbidden.';
+                $error = '%s method name "%s" does not use underscore format. ' .
+                    'Upper case forbidden.';
                 $data  = array(
                           ucfirst($methodProps['scope']),
                           $errorData[0],
                          );
                 $phpcsFile->addError($error, $stackPtr, 'ScopeNotUnderscore', $data);
             } else {
-                $error = 'Method name "%s" does not use underscore format.
-                     Upper case forbidden.';
+                $error = 'Method name "%s" does not use underscore format. ' .
+                     'Upper case forbidden.';
                 $phpcsFile->addError(
                     $error,
                     $stackPtr,
@@ -184,22 +184,22 @@ class FuelPHP_Sniffs_NamingConventions_UnderscoredWithScopeFunctionNameSniff
         if (preg_match('|^__|', $functionName) !== 0) {
             $magicPart = substr($functionName, 2);
             if (in_array($magicPart, $this->magicFunctions) === false) {
-                 $error = 'Function name "%s" is invalid; only PHP magic methods 
-                     should be prefixed with a double underscore';
-                 $phpcsFile->addError(
-                     $error,
-                     $stackPtr,
-                     'FunctionDoubleUnderscore',
-                     $errorData
-                 );
+                $error = 'Function name "%s" is invalid; only PHP magic methods '. 
+                    'should be prefixed with a double underscore';
+                $phpcsFile->addError(
+                    $error,
+                    $stackPtr,
+                    'FunctionDoubleUnderscore',
+                    $errorData
+                );
             }
 
             return;
         }
 
         if (static::isUnderscoreName($functionName) === false) {
-            $error = 'Function name "%s" does not use underscore format. 
-                Upper case forbidden.';
+            $error = 'Function name "%s" does not use underscore format. ' .
+                'Upper case forbidden.';
             $phpcsFile->addError($error, $stackPtr, 'NotUnderscore', $errorData);
         }
 
