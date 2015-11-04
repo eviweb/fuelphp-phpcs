@@ -299,4 +299,26 @@ final class Helper
     {
         require_once 'Sniffs' . DIRECTORY_SEPARATOR . $name;
     }
+
+    /**
+     * get all sniff files
+     *
+     * @return array returns all sniff files
+     */
+    public function getAllSniffs()
+    {
+        return glob(
+            static::$root_dir .
+            DIRECTORY_SEPARATOR .
+            'Standards' .
+            DIRECTORY_SEPARATOR .
+            'FuelPHP' .
+            DIRECTORY_SEPARATOR .
+            'Sniffs' .
+            DIRECTORY_SEPARATOR .
+            '*' .
+            DIRECTORY_SEPARATOR .
+            '*Sniff.php'
+        );
+    }
 }
