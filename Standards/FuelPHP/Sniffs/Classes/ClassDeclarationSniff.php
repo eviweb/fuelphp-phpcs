@@ -56,8 +56,8 @@ class FuelPHP_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_C
         );
         if (preg_match('/^\{\s*\}$/', $body)) {
             if (preg_match('/\s/', $body)) {
-                $error = 'Opening and closing braces of an empty %s must be on 
-                    the same line as the definition, with no spaces between them.';
+                $error = 'Opening and closing braces of an empty %s must be on ' . 
+                    'the same line as the definition, with no spaces between them.';
                 $phpcsFile->addError(
                     $error, $stackPtr, 'EmptyBodyBraces', $errorData
                 );
@@ -67,8 +67,8 @@ class FuelPHP_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_C
             parent::process($phpcsFile, $stackPtr);
             // check braces alignment
             if ($tokens[$openingBrace]['column'] !== $tokens[$closingBrace]['column']) {
-                $error = 'Closing braces must have the same indentation than 
-                    their respective opening one.';
+                $error = 'Closing braces must have the same indentation than ' .
+                    'their respective opening one.';
                 $phpcsFile->addError(
                     $error, $closingBrace, 'BadClosingBraceIndentation', $errorData
                 );

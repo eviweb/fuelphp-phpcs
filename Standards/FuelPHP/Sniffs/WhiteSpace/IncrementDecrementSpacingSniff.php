@@ -72,8 +72,8 @@ class FuelPHP_Sniffs_WhiteSpace_IncrementDecrementSpacingSniff
             if ($tokens[$stackPtr - 1]['code'] !== T_VARIABLE 
                 && $tokens[$stackPtr + 1]['code'] !== T_VARIABLE
             ) {
-                $error = 'Increment and decrement operators need to be close to 
-                    their variable. No inside space is allowed.';
+                $error = 'Increment and decrement operators need to be close to ' .
+                    'their variable. No inside space is allowed.';
                 $phpcsFile->addError($error, $stackPtr, 'NoInsideSpaceAllowed');
             }
         }

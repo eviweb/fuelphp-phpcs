@@ -76,8 +76,7 @@ class FuelPHP_Sniffs_NamingConventions_LowerCaseFileNameSniff
         static::$lastfile = $filename;
         $filename = basename($filename);
         if ($filename !== strtolower($filename)) {
-            $error = 'File names must be all lower case;
-                no upper case is allowed';
+            $error = 'File names must be all lower case; no upper case is allowed';
             $phpcsFile->addError($error, $stackPtr, 'UpperCaseInFileName');
         }
     }
