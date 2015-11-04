@@ -489,4 +489,22 @@ class MainRuleset extends \PHPUnit_Framework_TestCase
         $this->assertContains('$shouldBeSetInErrorMessage', (string) $errors[0]);
         $this->assertContains('$should_also_be_set_in_error_message_as_this_variable_name_is_too_long', (string) $warnings[0]);
     }
+    
+    /**
+     * test to valid issue #6
+     * @see https://github.com/eviweb/fuelphp-phpcs/issues/6
+     */
+    public function testFixIssue6()
+    {
+        $sniffs = Helper::instance()->getAllSniffs();
+        $pattern = '/(error|warning)\s*=\s*[\'\"]([^\'\"]*[\r\n]+[^\'\"]*)[\'\"]\s*;/';
+        
+        $this->assertFalse(empty($sniffs));
+        foreach ($sniffs as $sniff) {
+            $result = preg_match_all($pattern, file_get_contents($sniff), $matches);
+            $message = 'Invalid chars found in strings from: '.$sniff. "\n".print_r($matches, true);
+            
+            $this->assertTrue($result === 0, $message);
+        }
+    }
 }
