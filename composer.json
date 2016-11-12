@@ -30,5 +30,8 @@
     },
     "bin": [
         "bin/fuelphpcs"
-    ]
+    ],
+    "scripts": {
+        "phpunit": "phpunit"
+    }
 }
