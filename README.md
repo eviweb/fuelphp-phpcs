@@ -37,3 +37,7 @@ run ``phpcs --standard=FuelPHP PROJECT_TO_SNIFF_DIRECTORY`` where
     
 **BE AWARE not to use --tab-width phpcs option with another value than 0, 
 this would disable tabs recognition !**    
+
+Requirements
+------------
+Please note that this package works with **PHP Code Sniffer version 2.9.x**.   
